@@ -15,6 +15,7 @@
 
 package com.gmail.bleedobsidian.itemcase;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -25,4 +26,11 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class ItemCase extends JavaPlugin {
 
+    @Override
+    public void onEnable() {
+        
+        // Start metrics.
+        Metrics metrics = new Metrics(this);
+    }
+    
 }

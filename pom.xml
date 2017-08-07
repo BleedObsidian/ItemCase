@@ -15,12 +15,24 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     
+    <repositories>
+        <repository>
+            <id>bstats-repo</id>
+            <url>http://repo.bstats.org/content/repositories/releases/</url>
+        </repository>
+    </repositories>
+    
     <dependencies>
         <dependency> <!-- Spigot -->
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
             <version>1.12.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency> <!-- bStats -->
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>1.2</version>
         </dependency>
     </dependencies>
 
@@ -85,7 +97,16 @@
                             <exclude>junit</exclude>
                             <exclude>com.sk89q.worldguard</exclude>
                         </excludes>
+                        <includes>
+                            <include>org.bstats:*</include>
+                        </includes>
                     </artifactSet>
+                    <relocations>
+                        <relocation>
+                          <pattern>org.bstats</pattern>
+                          <shadedPattern>com.gmail.bleedobsidian</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
             </plugin>
         </plugins>
