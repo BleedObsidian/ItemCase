@@ -15,37 +15,24 @@
 
 package com.gmail.bleedobsidian.itemcase;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * ItemCase is a Bukkit plugin allowing you to showcase items on slabs, that can also be used as
- * shops.
+ * Handles bStats plugin metrics and any custom graphs.
  *
  * @author Jesse Prescott (BleedObsidian)
  */
-public final class ItemCase extends JavaPlugin {
+public class PluginMetrics {
     
     /**
-     * Custom plugin console logger.
+     * Constructor, starts bStats.
+     * 
+     * @param plugin The Bukkit JavaPlugin.
      */
-    private ConsoleLogger consoleLogger;
-
-    @Override
-    public void onEnable() {
+    public PluginMetrics(JavaPlugin plugin) {
         
-        // Start metrics.
-        PluginMetrics metrics = new PluginMetrics(this);
-       
-        // Set custom plugin console logger.
-        this.consoleLogger = new ConsoleLogger(this);
-    }
-    
-    /**
-     * @return Custom plugin console logger.
-     */
-    public ConsoleLogger getConsoleLogger() {
-        
-        // Custom plugin console logger.
-        return this.consoleLogger;
+        // Start bStats.
+        Metrics metrics = new Metrics(plugin);
     }
 }
