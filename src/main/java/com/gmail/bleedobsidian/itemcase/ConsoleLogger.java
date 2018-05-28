@@ -22,7 +22,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.fusesource.jansi.Ansi;
 
 /**
- * A custom logger used to add color to the console when using warnings and errors.
+ * A custom logger used to add color to the console when using warnings and
+ * errors.
  *
  * @author Jesse Prescott (BleedObsidian)
  */
