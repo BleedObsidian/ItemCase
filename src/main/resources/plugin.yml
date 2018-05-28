@@ -7,4 +7,4 @@ website: http://dev.bukkit.org/bukkit-plugins/itemcase/
 database: false
 prefix: ItemCase
 
-main: com.gmail.bleedobsidian.itemcase.ItemCase
+main: com.gmail.bleedobsidian.itemcase.ItemCaseCore

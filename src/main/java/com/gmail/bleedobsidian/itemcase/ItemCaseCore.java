@@ -18,34 +18,37 @@ package com.gmail.bleedobsidian.itemcase;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * ItemCase is a Bukkit plugin allowing you to showcase items on slabs, that can also be used as
- * shops.
+ * ItemCase is a Bukkit plugin allowing you to showcase items on slabs, that
+ * can also be used as shops.
  *
  * @author Jesse Prescott (BleedObsidian)
  */
-public final class ItemCase extends JavaPlugin {
+public final class ItemCaseCore extends JavaPlugin {
+    
+    /**
+     * Current running instance of ItemCaseCore.
+     */
+    public static ItemCaseCore instance;
     
     /**
      * Custom plugin console logger.
      */
-    private ConsoleLogger consoleLogger;
+    private final ConsoleLogger consoleLogger = new ConsoleLogger(this);
 
     @Override
     public void onEnable() {
         
+        // Set current instance.
+        ItemCaseCore.instance = this;
+        
         // Start metrics.
         PluginMetrics metrics = new PluginMetrics(this);
-       
-        // Set custom plugin console logger.
-        this.consoleLogger = new ConsoleLogger(this);
     }
     
     /**
      * @return Custom plugin console logger.
      */
     public ConsoleLogger getConsoleLogger() {
-        
-        // Custom plugin console logger.
         return this.consoleLogger;
     }
 }
