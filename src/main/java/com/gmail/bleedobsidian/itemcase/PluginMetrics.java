@@ -23,7 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Jesse Prescott (BleedObsidian)
  */
-public class PluginMetrics {
+public final class PluginMetrics {
     
     /**
      * Constructor, starts bStats.
