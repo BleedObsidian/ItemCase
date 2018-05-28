@@ -16,7 +16,11 @@
 package com.gmail.bleedobsidian.itemcase;
 
 import com.gmail.bleedobsidian.itemcase.Itemcase.ItemcaseListener;
+import com.gmail.bleedobsidian.itemcase.configurations.ConfigFile;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -31,6 +35,11 @@ public final class ItemCaseCore extends JavaPlugin {
      * Current running instance of ItemCaseCore.
      */
     public static ItemCaseCore instance;
+    
+    /**
+     * Main ItemCase configuration file.
+     */
+    private final ConfigFile configFile = new ConfigFile();
     
     /**
      * Custom plugin console logger.
@@ -51,9 +60,32 @@ public final class ItemCaseCore extends JavaPlugin {
         // Start metrics.
         PluginMetrics metrics = new PluginMetrics(this);
         
+        // Attempt to load configuration file.
+        try {
+            
+            // Load configuration file.
+            this.configFile.load(this);
+            
+        } catch (IOException e) {
+            
+            // Display error.
+            this.consoleLogger.severe("Failed to load configuration file.", e);
+            
+            // Stop loading.
+            return;
+        }
+        
         // Register ItemcaseListener.
         this.getServer().getPluginManager().registerEvents(
                 new ItemcaseListener(), this);
+    }
+    
+    /**
+
+     * @return Main ItemCase configuration file.
+     */
+    public ConfigFile getConfigFile() {
+        return this.configFile;
     }
     
     /**
