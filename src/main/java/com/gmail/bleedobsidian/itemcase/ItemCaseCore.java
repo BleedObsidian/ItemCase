@@ -19,8 +19,6 @@ import com.gmail.bleedobsidian.itemcase.Itemcase.ItemcaseListener;
 import com.gmail.bleedobsidian.itemcase.configurations.ConfigFile;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -47,9 +45,9 @@ public final class ItemCaseCore extends JavaPlugin {
     private final ConsoleLogger consoleLogger = new ConsoleLogger(this);
     
     /**
-     * An instance of ItemcaseManager.
+     * ItemcaseManager.
      */
-    private final ItemcaseManager itemcaseManager = new ItemcaseManager();
+    private ItemcaseManager itemcaseManager;
 
     @Override
     public void onEnable() {
@@ -74,6 +72,9 @@ public final class ItemCaseCore extends JavaPlugin {
             // Stop loading.
             return;
         }
+        
+        // Initialize ItemcaseManager.
+        this.itemcaseManager = new ItemcaseManager();
         
         // Register ItemcaseListener.
         this.getServer().getPluginManager().registerEvents(

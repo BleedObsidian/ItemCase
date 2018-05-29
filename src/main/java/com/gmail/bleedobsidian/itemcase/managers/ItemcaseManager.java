@@ -14,9 +14,15 @@
  */
 package com.gmail.bleedobsidian.itemcase.managers;
 
+import com.gmail.bleedobsidian.itemcase.ItemCaseCore;
 import com.gmail.bleedobsidian.itemcase.Itemcase;
+import com.gmail.bleedobsidian.itemcase.configurations.WorldFile;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,9 +35,50 @@ import org.bukkit.inventory.ItemStack;
 public final class ItemcaseManager {
     
     /**
+     * A HashMap of each world and its corresponding WorldFile.
+     */
+    private final HashMap<World, WorldFile> worldFiles = new HashMap<>();
+    
+    /**
      * A list of all active Itemcase instances.
      */
-    private final ArrayList<Itemcase> itemcases = new ArrayList<Itemcase>();
+    private final ArrayList<Itemcase> itemcases = new ArrayList<>();
+    
+    /**
+     * Constructor.
+     */
+    public ItemcaseManager() {
+        
+        // For every world.
+        for(World world : Bukkit.getWorlds()) {
+            
+            // Create WorldFile object.
+            WorldFile file = new WorldFile(world);
+            
+            // Add to hashmap.
+            this.worldFiles.put(world, file);
+            
+            // Attempt to load itemcases and add them to list.
+            try {
+                
+                // Load itemcaes.
+                ArrayList<Itemcase> loadedItemcases = file.loadItemcases();
+                
+                // Add to list.
+                this.itemcases.addAll(loadedItemcases);
+                
+            } catch (IOException e) {
+                
+                // Log error.
+                ItemCaseCore.instance.getConsoleLogger().severe(
+                        "Failed to load itemcases for world: " +
+                                world.getName(), e);
+                
+                // Exit.
+                return;
+            }
+        }
+    }
     
     /**
      * Create a new Itemcase.
@@ -48,6 +95,22 @@ public final class ItemcaseManager {
         
         // Add itemcase to the list.
         this.itemcases.add(itemcase);
+        
+        // Get config file for itemcase's world.
+        WorldFile file = this.worldFiles.get(location.getWorld());
+        
+        // Attempt to save itemcase.
+        try {
+            
+            // Save itemcase.
+            file.saveItemcase(itemcase);
+            
+        } catch (IOException e) {
+            
+             // Log error.
+            ItemCaseCore.instance.getConsoleLogger().severe(
+                        "Failed to save new itemcase to config.", e);
+        }
     }
     
     /**
