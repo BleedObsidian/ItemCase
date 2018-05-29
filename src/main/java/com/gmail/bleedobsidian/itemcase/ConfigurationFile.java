@@ -41,11 +41,28 @@ public class ConfigurationFile {
     private String name;
     
     /**
+     * The name of the default file in the jar.
+     */
+    private String defaultName;
+    
+    /**
+     * @param name The name of this configuration file.
+     * @param defaultName The name of the default file in the jar.
+     */
+    public ConfigurationFile(String name, String defaultName) {
+        
+        // Set name.
+        this.defaultName = defaultName;
+        this.name = name;
+    }
+    
+    /**
      * @param name The name of this configuration file.
      */
     public ConfigurationFile(String name) {
         
         // Set name.
+        this.defaultName = name;
         this.name = name;
     }
     
@@ -85,7 +102,7 @@ public class ConfigurationFile {
         File outputFile = new File(plugin.getDataFolder(), this.name);
         
         // Attempt to create an input stream of the default file in the jar.
-        InputStream inputStream = plugin.getResource(this.name);
+        InputStream inputStream = plugin.getResource(this.defaultName);
         
         // Check if we succeeded.
         if(inputStream == null) {
