@@ -81,6 +81,13 @@ public final class ItemCaseCore extends JavaPlugin {
                 new ItemcaseListener(), this);
     }
     
+    @Override
+    public void onDisable() {
+        
+        // Unload all itemcases.
+        this.itemcaseManager.unloadItemcases();
+    }
+    
     /**
 
      * @return Main ItemCase configuration file.

@@ -114,6 +114,22 @@ public final class ItemcaseManager {
     }
     
     /**
+     * Unload all currently loaded Itemcases.
+     */
+    public void unloadItemcases() {
+        
+        // For every loaded itemcase.
+        for(Itemcase itemcase : this.itemcases) {
+            
+            // Despawn the item.
+            itemcase.despawnItem();
+        }
+        
+        // Clear list.
+        this.itemcases.clear();
+    }
+    
+    /**
      * @return A list of all active Itemcase instances.
      */
     public ArrayList<Itemcase> getItemcases() {

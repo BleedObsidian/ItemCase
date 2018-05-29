@@ -25,7 +25,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -69,7 +68,7 @@ public final class Itemcase {
     /**
      * This itemcase's task.
      */
-    private final ItemcaseTask task;
+    private ItemcaseTask task;
     
     /**
      * The active item that is currently on display.
@@ -108,10 +107,6 @@ public final class Itemcase {
         // Set owner.
         this.owner = owner;
         
-        // Schedule itemcase task to execute every 200 server ticks (10 secs).
-        this.task = new ItemcaseTask(this);
-        this.task.runTaskTimer(ItemCaseCore.instance, 0, 200);
-        
         // Spawn display item for the first time.
         this.spawnItem();
     }
@@ -120,6 +115,10 @@ public final class Itemcase {
      * Spawn the display item.
      */
     public void spawnItem()  {
+        
+        // Schedule itemcase task to execute every 200 server ticks (10 secs).
+        this.task = new ItemcaseTask(this);
+        this.task.runTaskTimer(ItemCaseCore.instance, 0, 200);
         
         // Get the world that this itemcase is in.
         World world = this.location.getWorld();
@@ -159,6 +158,11 @@ public final class Itemcase {
      * Despawn the display item for this itemcase.
      */
     public void despawnItem() {
+        
+        // Cancel running task.
+        this.task.cancel();
+        
+        // Remove current display item from world.
         this.displayItem.remove();
     }
     
