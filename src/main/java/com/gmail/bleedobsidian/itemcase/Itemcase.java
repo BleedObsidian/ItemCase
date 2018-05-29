@@ -21,6 +21,7 @@ import java.util.UUID;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -63,7 +64,7 @@ public final class Itemcase {
     /**
      * The owner of this itemcase.
      */
-    private final Player owner;
+    private final OfflinePlayer owner;
     
     /**
      * This itemcase's task.
@@ -82,7 +83,8 @@ public final class Itemcase {
      * @param location The location of the itemcase.
      * @param owner The owner of this itemcase.
      */
-    public Itemcase(ItemStack itemStack, Location location, Player owner) {
+    public Itemcase(ItemStack itemStack, Location location,
+            OfflinePlayer owner) {
         
         // Set item stack and ensure stack size is 1.
         this.itemStack = itemStack.clone();
@@ -188,12 +190,30 @@ public final class Itemcase {
     }
     
     /**
+     * @return The ItemStack that this itemcase is showing.
+     */
+    public ItemStack getItemStack() {
+        
+        // The ItemStack of this Itemcase.
+        return this.itemStack;
+    }
+    
+    /**
      * @return The Location of this itemcase.
      */
     public Location getLocation() {
         
         // Location of this itemcase.
         return this.location;
+    }
+    
+    /**
+     * @return The owner of this itemcase.
+     */
+    public OfflinePlayer getOwner() {
+        
+        // Owner of this itemcase.
+        return this.owner;
     }
     
     /**
