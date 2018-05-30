@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.UUID;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -116,12 +115,17 @@ public final class Itemcase {
      */
     public void spawnItem()  {
         
-        // Schedule itemcase task to execute every 200 server ticks (10 secs).
-        this.task = new ItemcaseTask(this);
-        this.task.runTaskTimer(ItemCaseCore.instance, 0, 200);
-        
         // Get the world that this itemcase is in.
         World world = this.location.getWorld();
+        
+        // If task task was previously cancelled or never made.
+        if(this.task == null || this.task.isCancelled()) {
+            
+            // Schedule itemcase task to execute every 200 server 
+            // ticks (10 secs).
+            this.task = new ItemcaseTask(this);
+            this.task.runTaskTimer(ItemCaseCore.instance, 0, 200);
+        }
         
         // Check if the chunk is currently loaded.
         if(!world.isChunkLoaded(this.chunk)) {
@@ -276,13 +280,6 @@ public final class Itemcase {
         
         @EventHandler(priority = EventPriority.NORMAL)
         public void onBlockBreakEvent(BlockBreakEvent event) {
-            
-            // If the material is not some sort of step.
-            if(event.getBlock().getType() != Material.STEP) {
-                
-                // Ignore event.
-                return;
-            }
             
             // Get ItemcaseManager.
             ItemcaseManager itemcaseManager = 
