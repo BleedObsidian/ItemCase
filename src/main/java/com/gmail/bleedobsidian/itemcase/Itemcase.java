@@ -347,6 +347,13 @@ public final class Itemcase {
         @Override
         public void run() {
             
+            // If chunk is not currently loaded.
+            if(!this.itemcase.chunk.isLoaded()) {
+                
+                // Dont bother running this task.
+                return;
+            }
+            
             // Get the default display item location.
             Location location = this.itemcase.getLocation();
             
