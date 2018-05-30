@@ -323,7 +323,7 @@ public final class Itemcase {
      * is particularly useful when servers use anti-lag plugins that forcibly
      * kill entities or a player has somehow caused an item to move.
      */
-    public static final class ItemcaseTask extends BukkitRunnable {
+    private final class ItemcaseTask extends BukkitRunnable {
         
         /**
          * The itemcase that this task is for.

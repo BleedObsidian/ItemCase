@@ -47,7 +47,7 @@ public final class ItemCaseCore extends JavaPlugin {
     /**
      * ItemcaseManager.
      */
-    private ItemcaseManager itemcaseManager;
+    private final ItemcaseManager itemcaseManager =  new ItemcaseManager();
 
     @Override
     public void onEnable() {
@@ -77,7 +77,7 @@ public final class ItemCaseCore extends JavaPlugin {
         this.consoleLogger.info("Successfully loaded main configuration file.");
         
         // Initialize ItemcaseManager.
-        this.itemcaseManager = new ItemcaseManager();
+        this.itemcaseManager.registerListener();
         
         // Register ItemcaseListener.
         this.getServer().getPluginManager().registerEvents(

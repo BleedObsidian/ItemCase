@@ -24,6 +24,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -43,46 +47,6 @@ public final class ItemcaseManager {
      * A list of all active Itemcase instances.
      */
     private final ArrayList<Itemcase> itemcases = new ArrayList<>();
-    
-    /**
-     * Constructor.
-     */
-    public ItemcaseManager() {
-        
-        // For every world.
-        for(World world : Bukkit.getWorlds()) {
-            
-            // Create WorldFile object.
-            WorldFile file = new WorldFile(world);
-            
-            // Add to hashmap.
-            this.worldFiles.put(world, file);
-            
-            // Attempt to load itemcases and add them to list.
-            try {
-                
-                // Load itemcaes.
-                ArrayList<Itemcase> loadedItemcases = file.loadItemcases();
-                
-                // Add to list.
-                this.itemcases.addAll(loadedItemcases);
-                
-            } catch (IOException e) {
-                
-                // Log error.
-                ItemCaseCore.instance.getConsoleLogger().severe(
-                        "Failed to load itemcases for world: " +
-                                world.getName(), e);
-                
-                // Exit.
-                return;
-            }
-            
-            // Log.
-            ItemCaseCore.instance.getConsoleLogger().info(
-                    "Loaded itemcases for world: " + world.getName());
-        }
-    }
     
     /**
      * Create a new Itemcase.
@@ -134,9 +98,66 @@ public final class ItemcaseManager {
     }
     
     /**
+     * Register the event listener for this class.
+     */
+    public void registerListener() {
+        
+        // Register listener with bukkit.
+        Bukkit.getPluginManager().registerEvents(
+                new ItemcaseManagerListener(), ItemCaseCore.instance);
+    }
+    
+    /**
      * @return A list of all active Itemcase instances.
      */
     public ArrayList<Itemcase> getItemcases() {
+        
+        // List of Itemcases.
         return this.itemcases;
     }
+    
+    /**
+     * A bukkit listener for the ItemcaseManager. Used to load Itemcases upon
+     * world loading.
+     */
+    private final class ItemcaseManagerListener implements Listener {
+        
+        @EventHandler(priority = EventPriority.MONITOR)
+        public void onWorldLoadEvent(WorldLoadEvent event) {
+            
+            // Get world.
+            World world = event.getWorld();
+            
+            // Create WorldFile object.
+            WorldFile file = new WorldFile(world);
+            
+            // Add to hashmap.
+            ItemcaseManager.this.worldFiles.put(world, file);
+            
+            // Attempt to load itemcases and add them to list.
+            try {
+                
+                // Load itemcaes.
+                ArrayList<Itemcase> loadedItemcases = file.loadItemcases();
+                
+                // Add to list.
+                ItemcaseManager.this.itemcases.addAll(loadedItemcases);
+                
+            } catch (IOException e) {
+                
+                // Log error.
+                ItemCaseCore.instance.getConsoleLogger().severe(
+                        "Failed to load itemcases for world: " +
+                                world.getName(), e);
+                
+                // Exit.
+                return;
+            }
+            
+            // Log.
+            ItemCaseCore.instance.getConsoleLogger().info(
+                    "Loaded itemcases for world: " + world.getName());
+        }
+    }
+    
 }
