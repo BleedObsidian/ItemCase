@@ -1,9 +1,5 @@
-#--------------------------- Itemcase File ---------------------------#
-# This file contains all of the itemcases for a specific world.       #
-#                                                                     #
 # MODIFY AT YOUR OWN RISK!                                            #
 # Server must be stopped while changes are made to this file          #
 # otherwise they will be overwritten.                                 #
-#---------------------------------------------------------------------#
 
 itemcases: {}
