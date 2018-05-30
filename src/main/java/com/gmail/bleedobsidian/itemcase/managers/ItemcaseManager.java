@@ -77,6 +77,10 @@ public final class ItemcaseManager {
                 // Exit.
                 return;
             }
+            
+            // Log.
+            ItemCaseCore.instance.getConsoleLogger().info(
+                    "Loaded itemcases for world: " + world.getName());
         }
     }
     

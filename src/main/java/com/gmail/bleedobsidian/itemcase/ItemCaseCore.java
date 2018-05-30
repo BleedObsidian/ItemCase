@@ -73,12 +73,22 @@ public final class ItemCaseCore extends JavaPlugin {
             return;
         }
         
+        // Log.
+        this.consoleLogger.info("Successfully loaded main configuration file.");
+        
         // Initialize ItemcaseManager.
         this.itemcaseManager = new ItemcaseManager();
         
         // Register ItemcaseListener.
         this.getServer().getPluginManager().registerEvents(
                 new ItemcaseListener(), this);
+        
+        // Log.
+        this.consoleLogger.info("Main event listener registered.");
+        
+        // Log.
+        this.consoleLogger.info("ItemCase " +
+                this.getDescription().getVersion() + " enabled.");
     }
     
     @Override
@@ -86,6 +96,9 @@ public final class ItemCaseCore extends JavaPlugin {
         
         // Unload all itemcases.
         this.itemcaseManager.unloadItemcases();
+        
+        // Log.
+        this.consoleLogger.info("Itemcases unloaded successfully.");
     }
     
     /**
