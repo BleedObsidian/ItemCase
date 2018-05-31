@@ -15,7 +15,7 @@
 package com.gmail.bleedobsidian.itemcase;
 
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * Utility class used for communicating in different dialects.
@@ -47,12 +47,12 @@ public final class ChatLogger {
     }
     
     /**
-     * Send given CommandSender message.
+     * Send given Player a message.
      * 
-     * @param sender CommandSender.
-     * @param message Message key or message.
+     * @param player Player to send message.
+     * @param string Message key or message.
      */
-    public void message(CommandSender sender, String string) {
+    public void message(Player player, String string) {
         
         // If string is a message key.
         if(this.translator.isKey(string)) {
@@ -63,6 +63,6 @@ public final class ChatLogger {
         }
         
         // Send message.
-        sender.sendMessage(ChatLogger.PREFIX + string);
+        player.sendMessage(ChatLogger.PREFIX + string);
     }
 }
