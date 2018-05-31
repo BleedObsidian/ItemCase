@@ -16,10 +16,12 @@
 package com.gmail.bleedobsidian.itemcase;
 
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -353,6 +355,17 @@ public final class Itemcase {
             
             // Get the default display item location.
             Location location = this.itemcase.getLocation();
+            
+            // List of valid materials.
+            ArrayList<Material> materials = 
+                    ItemCaseCore.instance.getConfigFile().getMaterials();
+            
+            // Check if this block still exists.
+            if(!materials.contains(location.getBlock().getType())) {
+                
+                // Set to default.
+                location.getBlock().setType(materials.get(0));
+            }
             
             // Get all entites near itemcase. (Uses quite a large area just in
             // case item is not where it should be).
