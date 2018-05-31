@@ -24,7 +24,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -159,6 +158,29 @@ public final class ItemcaseManager {
         // Register listener with bukkit.
         Bukkit.getPluginManager().registerEvents(
                 new ItemcaseManagerListener(), ItemCaseCore.instance);
+    }
+    
+    /**
+     * If the given location is an itemcase or not.
+     * 
+     * @param location Location.
+     * @return Boolean.
+     */
+    public boolean isItemcase(Location location) {
+        
+        // For every itemcase.
+        for(Itemcase itemcase : this.itemcases) {
+            
+            // Check if location matches.
+            if(itemcase.getLocation().equals(location)) {
+                
+                // Return true.
+                return true;
+            }
+        }
+        
+        // Otherwise return false.
+        return false;
     }
     
     /**

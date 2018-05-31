@@ -73,6 +73,16 @@ public final class CreateCommand implements Command {
 
         // Get the players target block.
         target = player.getTargetBlock(null, 3).getLocation();
+        
+        // Check if itemcase already exists here.
+        if(ItemCaseCore.instance.getItemcaseManager().isItemcase(target)) {
+            
+            // Show message.
+            chatLogger.message(player, "command.create.invalid-location");
+            
+            // Exit.
+            return;
+        }
 
         // If target block is not on the list of accepted materials.
         if(!materials.contains(target.getBlock().getType())) {

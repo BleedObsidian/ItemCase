@@ -42,6 +42,10 @@ command:
         # invalid block type.
         invalid-type: "This block cannot be used for an ItemCase."
         
+        # Shown to the player when they try to make an itemcase where one
+        # already exists.
+        invalid-location: "An ItemCase already exists here."
+        
         # Shown to the player when they use the create command but they are not
         # holding any item in their main hand.
         main-hand: "You must be holding something in your main hand."
