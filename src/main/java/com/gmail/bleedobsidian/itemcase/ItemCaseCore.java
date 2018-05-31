@@ -109,6 +109,9 @@ public final class ItemCaseCore extends JavaPlugin {
         // Log.
         this.consoleLogger.info("console.info.listener-registered");
         
+        // Load itemcases for already loaded worlds.
+        this.itemcaseManager.initialize();
+        
         // Set version placeholder and log.
         this.translator.setPlaceholder("%VERSION%",
                 this.getDescription().getVersion());

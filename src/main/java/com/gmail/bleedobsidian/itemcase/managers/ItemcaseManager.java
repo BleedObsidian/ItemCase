@@ -49,6 +49,59 @@ public final class ItemcaseManager {
     private final ArrayList<Itemcase> itemcases = new ArrayList<>();
     
     /**
+     * Initialize this class.
+     */
+    public void initialize() {
+        
+        // For every currently loaded world.
+        for(World world : Bukkit.getWorlds()) {
+            
+            // Request itemcases to be loaded.
+            this.loadItemcases(world);
+        }
+    }
+    
+    /**
+     * Loads itemcases for the given world.
+     * 
+     * @param world World.
+     */
+    private void loadItemcases(World world) {
+        
+        // Create WorldFile object.
+        WorldFile file = new WorldFile(world);
+
+        // Add to hashmap.
+        ItemcaseManager.this.worldFiles.put(world, file);
+
+        // Attempt to load itemcases and add them to list.
+        try {
+
+            // Load itemcaes.
+            ArrayList<Itemcase> loadedItemcases = file.loadItemcases();
+
+            // Add to list.
+            ItemcaseManager.this.itemcases.addAll(loadedItemcases);
+
+        } catch (IOException e) {
+
+            // Log error.
+            ItemCaseCore.instance.getConsoleLogger().severe(
+                    "Failed to load itemcases for world: " +
+                            world.getName(), e);
+
+            // Exit.
+            return;
+        }
+
+        // Set world name placeholder and log.
+        ItemCaseCore.instance.getTranslator().setPlaceholder(
+                "%WORLD_NAME%", world.getName());
+        ItemCaseCore.instance.getConsoleLogger().info(
+                "console.info.loaded");
+    }
+    
+    /**
      * Create a new Itemcase.
      * 
      * @param itemStack The ItemStack to be displayed.
@@ -128,37 +181,8 @@ public final class ItemcaseManager {
             // Get world.
             World world = event.getWorld();
             
-            // Create WorldFile object.
-            WorldFile file = new WorldFile(world);
-            
-            // Add to hashmap.
-            ItemcaseManager.this.worldFiles.put(world, file);
-            
-            // Attempt to load itemcases and add them to list.
-            try {
-                
-                // Load itemcaes.
-                ArrayList<Itemcase> loadedItemcases = file.loadItemcases();
-                
-                // Add to list.
-                ItemcaseManager.this.itemcases.addAll(loadedItemcases);
-                
-            } catch (IOException e) {
-                
-                // Log error.
-                ItemCaseCore.instance.getConsoleLogger().severe(
-                        "Failed to load itemcases for world: " +
-                                world.getName(), e);
-                
-                // Exit.
-                return;
-            }
-            
-            // Set world name placeholder and log.
-            ItemCaseCore.instance.getTranslator().setPlaceholder(
-                    "%WORLD_NAME%", world.getName());
-            ItemCaseCore.instance.getConsoleLogger().info(
-                    "console.info.loaded");
+            // Request itemcases to be loaded.
+            ItemcaseManager.this.loadItemcases(world);
         }
     }
     
