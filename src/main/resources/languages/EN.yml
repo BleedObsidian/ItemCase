@@ -1,0 +1,20 @@
+#--------------------------- Language File ---------------------------#
+# This file contains all of the english translations for ItemCase.    #
+#---------------------------------------------------------------------#
+
+# Console based messages.
+console:
+    
+    # Non erroneous messages.
+    info:
+        
+        # Shown during plugin loading.
+        #
+        # %LANGUAGE% = The language as set in the main config.
+        # %VERSION% = The version of ItemCase in use.
+        locale: "Using locale: %LANGUAGE%"
+        config-loaded: "Successfully loaded main configuration file."
+        listener-registered: "Main event listener registered."
+        enabled: "ItemCase v%VERSION% enabled."
+        unloaded: "Itemcases unloaded successfully."
+        loaded: "Loaded itemcases for world: %WORLD_NAME%"

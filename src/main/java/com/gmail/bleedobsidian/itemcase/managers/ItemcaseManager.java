@@ -154,9 +154,11 @@ public final class ItemcaseManager {
                 return;
             }
             
-            // Log.
+            // Set world name placeholder and log.
+            ItemCaseCore.instance.getTranslator().setPlaceholder(
+                    "%WORLD_NAME%", world.getName());
             ItemCaseCore.instance.getConsoleLogger().info(
-                    "Loaded itemcases for world: " + world.getName());
+                    "console.info.loaded");
         }
     }
     

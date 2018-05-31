@@ -28,11 +28,24 @@ import org.fusesource.jansi.Ansi;
  * @author Jesse Prescott (BleedObsidian)
  */
 public final class ConsoleLogger extends Logger {
-
-    /**
-     * The Bukkit JavaPlugin.
+    
+     /**
+     * White color string for console.
      */
-    private JavaPlugin plugin;
+    private static final String WHITE_COLOR = 
+            Ansi.ansi().fg(Ansi.Color.WHITE).boldOff().toString();
+    
+    /**
+     * Yellow color string for console.
+     */
+    private static final String YELLOW_COLOR = 
+            Ansi.ansi().fg(Ansi.Color.YELLOW).bold().toString();
+    
+    /**
+     * Red color string for console.
+     */
+    private static final String RED_COLOR =
+            Ansi.ansi().fg(Ansi.Color.RED).bold().toString();
     
     /**
      * The plugin prefix.
@@ -40,26 +53,16 @@ public final class ConsoleLogger extends Logger {
     private final String prefix;
     
     /**
-     * White color string for console.
+     * Language translator.
      */
-    private final String whiteColor;
-    
-    /**
-     * Yellow color string for console.
-     */
-    private final String yellowColor;
-    
-    /**
-     * Red color string for console.
-     */
-    private final String redColor;
+    private final LanguageTranslator translator;
     
     /**
      * Constructor.
      * 
      * @param plugin The B
      */
-    public ConsoleLogger(JavaPlugin plugin) {
+    public ConsoleLogger(JavaPlugin plugin, LanguageTranslator translator) {
         
         // Call parent constructor.
         super(plugin.getName(), null);
@@ -68,20 +71,29 @@ public final class ConsoleLogger extends Logger {
         super.setParent(plugin.getServer().getLogger());
         super.setLevel(Level.ALL);
         
-        // Set console color strings.
-        this.whiteColor = Ansi.ansi().fg(Ansi.Color.WHITE).boldOff().toString();
-        this.yellowColor = Ansi.ansi().fg(Ansi.Color.YELLOW).bold().toString();
-        this.redColor = Ansi.ansi().fg(Ansi.Color.RED).bold().toString();
-        
         // Set plugin prefix.
         this.prefix = "[" + plugin.getName() + "] ";
+        
+        // Set translator.
+        this.translator = translator;
     }
     
     @Override
     public void log(LogRecord logRecord) {
         
+        // Message.
+        String message = logRecord.getMessage();
+        
+        // If message is a message key.
+        if(translator.isKey(message)) {
+            
+            // Translate.
+            message = translator.getTranslation(message);
+            
+        }
+        
         // Default white text.
-        logRecord.setMessage(this.prefix + logRecord.getMessage());
+        logRecord.setMessage(this.prefix + message);
         
         // Parent.
         super.log(logRecord);
@@ -90,8 +102,17 @@ public final class ConsoleLogger extends Logger {
     @Override
     public void warning(String message) {
         
+        // If message is a message key.
+        if(translator.isKey(message)) {
+            
+            // Translate.
+            message = translator.getTranslation(message);
+            
+        }
+        
         // Add color to message.
-        message = this.yellowColor + message + this.whiteColor;
+        message = ConsoleLogger.YELLOW_COLOR + message +
+                ConsoleLogger.WHITE_COLOR;
         
         // Log message.
         this.log(Level.WARNING, message);
@@ -100,8 +121,17 @@ public final class ConsoleLogger extends Logger {
     @Override
     public void severe(String message) {
         
+        // If message is a message key.
+        if(translator.isKey(message)) {
+            
+            // Translate.
+            message = translator.getTranslation(message);
+            
+        }
+        
         // Add color to message.
-        message = this.redColor + message + this.whiteColor;
+        message = ConsoleLogger.RED_COLOR + message +
+                ConsoleLogger.WHITE_COLOR;
         
         // Log message.
         this.log(Level.SEVERE, message);
@@ -115,8 +145,17 @@ public final class ConsoleLogger extends Logger {
      */
     public void severe(String message, Throwable throwable) {
         
+        // If message is a message key.
+        if(translator.isKey(message)) {
+            
+            // Translate.
+            message = translator.getTranslation(message);
+            
+        }
+        
         // Add color to message.
-        message = this.redColor + message + this.whiteColor;
+        message = ConsoleLogger.RED_COLOR + message +
+                ConsoleLogger.WHITE_COLOR;
         
         // Log message.
         this.log(Level.SEVERE, message, throwable);

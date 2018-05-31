@@ -40,9 +40,20 @@ public final class ItemCaseCore extends JavaPlugin {
     private final ConfigFile configFile = new ConfigFile();
     
     /**
+     * The language translator.
+     */
+    private final LanguageTranslator translator = new LanguageTranslator();
+    
+    /**
      * Custom plugin console logger.
      */
-    private final ConsoleLogger consoleLogger = new ConsoleLogger(this);
+    private final ConsoleLogger consoleLogger = new ConsoleLogger(this,
+            translator);
+    
+    /**
+     * Chat logger.
+     */
+    private final ChatLogger chatLogger = new ChatLogger(translator);
     
     /**
      * ItemcaseManager.
@@ -73,8 +84,20 @@ public final class ItemCaseCore extends JavaPlugin {
             return;
         }
         
+        // Attempt to load translator with given locale.
+        if(!this.translator.load(this, this.configFile.getLocale())) {
+            
+            // Failed to load, stop loading.
+            return;
+        }
+        
         // Log.
-        this.consoleLogger.info("Successfully loaded main configuration file.");
+        this.consoleLogger.info("console.info.config-loaded");
+        
+        // Set language placeholder and log.
+        this.translator.setPlaceholder("%LANGUAGE%",
+                this.configFile.getLocale().name());
+        this.consoleLogger.info("console.info.locale");
         
         // Initialize ItemcaseManager.
         this.itemcaseManager.registerListener();
@@ -84,11 +107,12 @@ public final class ItemCaseCore extends JavaPlugin {
                 new ItemcaseListener(), this);
         
         // Log.
-        this.consoleLogger.info("Main event listener registered.");
+        this.consoleLogger.info("console.info.listener-registered");
         
-        // Log.
-        this.consoleLogger.info("ItemCase " +
-                this.getDescription().getVersion() + " enabled.");
+        // Set version placeholder and log.
+        this.translator.setPlaceholder("%VERSION%",
+                this.getDescription().getVersion());
+        this.consoleLogger.info("console.info.enabled");
     }
     
     @Override
@@ -98,7 +122,7 @@ public final class ItemCaseCore extends JavaPlugin {
         this.itemcaseManager.unloadItemcases();
         
         // Log.
-        this.consoleLogger.info("Itemcases unloaded successfully.");
+        this.consoleLogger.info("config.info.unloaded");
     }
     
     /**
@@ -107,6 +131,13 @@ public final class ItemCaseCore extends JavaPlugin {
      */
     public ConfigFile getConfigFile() {
         return this.configFile;
+    }
+    
+    /**
+     * @return Language translator.
+     */
+    public LanguageTranslator getTranslator() {
+        return this.translator;
     }
     
     /**

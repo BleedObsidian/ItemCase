@@ -17,6 +17,7 @@ package com.gmail.bleedobsidian.itemcase;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -46,14 +47,19 @@ public class ConfigurationFile {
     private String defaultName;
     
     /**
+     * If this configuration file can be copied outside of the jar.
+     */
+    private boolean canCopy = true;
+    
+    /**
      * @param name The name of this configuration file.
      * @param defaultName The name of the default file in the jar.
      */
     public ConfigurationFile(String name, String defaultName) {
         
         // Set name.
-        this.defaultName = defaultName;
         this.name = name;
+        this.defaultName = defaultName;
     }
     
     /**
@@ -62,8 +68,22 @@ public class ConfigurationFile {
     public ConfigurationFile(String name) {
         
         // Set name.
+        this.name = name;
+        this.defaultName = name;
+    }
+    
+    /**
+     * @param name The name of this configuration file.
+     * @param canCopy If configuration file can be copied outside of the jar.
+     */
+    public ConfigurationFile(String name, boolean canCopy) {
+        
+        // Set name.
         this.defaultName = name;
         this.name = name;
+        
+        // Set canCopy.
+        this.canCopy = canCopy;
     }
     
     /**
@@ -75,18 +95,32 @@ public class ConfigurationFile {
      */
     public void load(JavaPlugin plugin) throws IOException {
         
-        // Create file reference.
-        File fileReference = new File(plugin.getDataFolder(), this.name);
-        
-        // If the file doesn't exist...
-        if(!fileReference.exists()) {
+        // If this configuration file can be copied outside of the jar...
+        if(this.canCopy) {
+
+            // Create file reference.
+            File fileReference = new File(plugin.getDataFolder(), this.name);
+
+            // If the file doesn't exist...
+            if(!fileReference.exists() && this.canCopy) {
+
+                // Copy default config from jar to data folder.
+                this.copyDefault(plugin);
+            }
             
-            // Copy default config from jar to data folder.
-            this.copyDefault(plugin);
+            // Attempt to load it.
+            this.file = YamlConfiguration.loadConfiguration(fileReference);
+            
+            // Exit.
+            return;
         }
         
+        // Attempt to create an input stream reader of the file in the jar.
+        InputStreamReader inputStreamReader = 
+                new InputStreamReader(plugin.getResource(this.name));
+        
         // Attempt to load it.
-        this.file = YamlConfiguration.loadConfiguration(fileReference);
+        this.file = YamlConfiguration.loadConfiguration(inputStreamReader);
     }
     
     /**
@@ -128,10 +162,38 @@ public class ConfigurationFile {
      */
     public void save(JavaPlugin plugin) throws IOException {
         
+        // If this configuration file can not be copied outside of the jar...
+        if(!this.canCopy) {
+            
+            // Exit.
+            return;
+        }
+        
         // Create reference to output file.
         File outputFile = new File(plugin.getDataFolder(), this.name);
         
         // Attempt to save file.
         this.file.save(outputFile);
+    }
+    
+    /**
+     * Check if this file contains the given key.
+     * 
+     * @param key Key.
+     * @return Boolean.
+     */
+    public boolean hasKey(String key) {
+        
+        // Return if key exists.
+        return this.file.contains(key);
+    }
+    
+    /**
+     * @return If file is loaded.
+     */
+    public boolean isLoaded() {
+        
+        // Return true if file is not null.
+        return this.file != null;
     }
 }

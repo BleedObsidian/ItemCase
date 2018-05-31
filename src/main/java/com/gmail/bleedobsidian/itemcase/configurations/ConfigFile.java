@@ -15,6 +15,7 @@
 package com.gmail.bleedobsidian.itemcase.configurations;
 
 import com.gmail.bleedobsidian.itemcase.ConfigurationFile;
+import com.gmail.bleedobsidian.itemcase.LanguageTranslator.Language;
 import java.util.ArrayList;
 import org.bukkit.Material;
 
@@ -35,10 +36,18 @@ public class ConfigFile extends ConfigurationFile {
     }
     
     /**
-     * @return The chosen locale to use.
+     * @return The chosen Language to use.
      */
-    public String getLocale() {
-        return this.file.getString("Locale");
+    public Language getLocale() {
+        
+        // Get set locale string.
+        String locale = this.file.getString("Locale");
+        
+        // Convert to uppercase just in case.
+        locale = locale.toUpperCase();
+        
+        // Return equivalent language.
+        return Language.valueOf(locale);
     }
     
     /**
