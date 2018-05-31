@@ -56,6 +56,11 @@ public final class ItemCaseCore extends JavaPlugin {
     private final ChatLogger chatLogger = new ChatLogger(translator);
     
     /**
+     * Generic Logger.
+     */
+    private final GenericLogger genericLogger = new GenericLogger(translator);
+    
+    /**
      * ItemcaseManager.
      */
     private final ItemcaseManager itemcaseManager =  new ItemcaseManager();
@@ -112,6 +117,9 @@ public final class ItemCaseCore extends JavaPlugin {
         // Load itemcases for already loaded worlds.
         this.itemcaseManager.initialize();
         
+        // Set command executor.
+        this.getCommand("itemcase").setExecutor(new CommandHandler());
+        
         // Set version placeholder and log.
         this.translator.setPlaceholder("%VERSION%",
                 this.getDescription().getVersion());
@@ -148,6 +156,20 @@ public final class ItemCaseCore extends JavaPlugin {
      */
     public ConsoleLogger getConsoleLogger() {
         return this.consoleLogger;
+    }
+    
+    /**
+     * @return Chat logger.
+     */
+    public ChatLogger getChatLogger() {
+        return this.chatLogger;
+    }
+    
+    /**
+     * @return Generic Logger.
+     */
+    public GenericLogger getGenericLogger() {
+        return this.genericLogger;
     }
     
     /**

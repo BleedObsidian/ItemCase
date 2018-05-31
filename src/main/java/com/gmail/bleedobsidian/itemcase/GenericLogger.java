@@ -14,21 +14,15 @@
  */
 package com.gmail.bleedobsidian.itemcase;
 
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 /**
- * Utility class used for communicating to players in game with a translator.
+ * Utility class used for communicating to command senders in different
+ * dialects.
  * 
  * @author Jesse Prescott (BleedObsidian).
  */
-public final class ChatLogger {
-
-    /**
-     * The prefix placed before all messages.
-     */
-    private final static String PREFIX = 
-            ChatColor.BLUE + "[ItemCase]: " + ChatColor.RESET;
+public final class GenericLogger {
     
     /**
      * Language translator.
@@ -40,19 +34,19 @@ public final class ChatLogger {
      * 
      * @param translator language translator.
      */
-    public ChatLogger(LanguageTranslator translator) {
+    public GenericLogger(LanguageTranslator translator) {
         
         // Set translator.
         this.translator = translator;
     }
     
     /**
-     * Send given Player a message.
+     * Send given CommandSender a message.
      * 
-     * @param player Player to send message.
+     * @param sender CommandSender.
      * @param string Message key or message.
      */
-    public void message(Player player, String string) {
+    public void message(CommandSender sender, String string) {
         
         // If string is a message key.
         if(this.translator.isKey(string)) {
@@ -63,6 +57,6 @@ public final class ChatLogger {
         }
         
         // Send message.
-        player.sendMessage(ChatLogger.PREFIX + string);
+        sender.sendMessage(string);
     }
 }

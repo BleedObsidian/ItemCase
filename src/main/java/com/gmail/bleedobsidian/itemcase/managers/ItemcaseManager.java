@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -109,7 +110,7 @@ public final class ItemcaseManager {
      * @param owner The owner of this itemcase.
      */
     public void createItemcase(ItemStack itemStack, Location location,
-            Player owner) {
+            OfflinePlayer owner) {
         
         // Create new itemcase instance.
         Itemcase itemcase = new Itemcase(itemStack, location, owner);

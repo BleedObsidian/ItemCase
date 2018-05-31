@@ -8,3 +8,12 @@ database: false
 prefix: ItemCase
 
 main: com.gmail.bleedobsidian.itemcase.ItemCaseCore
+
+commands:
+    itemcase:
+        aliases: [itemc, ic]
+        description: "Showcase items on slabs, that can also be used as shops."
+        
+permissions:
+    itemcase.create:
+        description: Create and destroy showcase itemcases.

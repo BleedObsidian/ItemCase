@@ -12,9 +12,39 @@ console:
         #
         # %LANGUAGE% = The language as set in the main config.
         # %VERSION% = The version of ItemCase in use.
+        # %WORLD_NAME% = The name of the world.
         locale: "Using locale: %LANGUAGE%"
         config-loaded: "Successfully loaded main configuration file."
         listener-registered: "Main event listener registered."
         enabled: "ItemCase v%VERSION% enabled."
         unloaded: "Itemcases unloaded successfully."
         loaded: "Loaded itemcases for world: %WORLD_NAME%"
+
+# Messages shown when using commands.
+command:
+    
+    # Shown when a user incorrectly uses the main itemcase command.
+    # %COMMAND% = The command usage syntax.
+    itemcase-help: "Usage: %COMMAND%"
+    
+    # Shown when a user tries to execute a command and they are not an in game
+    # player.
+    not-player: "You must be a player to use this command."
+    
+    # Shown when a user tries to execute a command and they do not have the
+    # required permission.
+    permission: "You do not have permission to use this command."
+    
+    # Messages shown when using the 'create' command.
+    create:
+        
+        # Shown to the player when they try to make an itemcase out of an
+        # invalid block type.
+        invalid-type: "This block cannot be used for an ItemCase."
+        
+        # Shown to the player when they use the create command but they are not
+        # holding any item in their main hand.
+        main-hand: "You must be holding something in your main hand."
+        
+        # Shown to the player upon successful creation.
+        success: "ItemCase created."
