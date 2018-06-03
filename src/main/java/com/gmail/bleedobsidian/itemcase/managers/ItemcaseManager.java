@@ -271,6 +271,9 @@ public final class ItemcaseManager {
             // Get world name.
             String worldName = event.getWorld().getName();
             
+            // WorldFile.
+            WorldFile worldFile = null;
+            
             // For every entry.
             for(Entry<World, WorldFile> entry :
                 ItemcaseManager.this.worldFiles.entrySet()) {
@@ -280,6 +283,9 @@ public final class ItemcaseManager {
                     
                     // Attempt to delete config.
                     try {
+                        
+                        // Set world file.
+                        worldFile = entry.getValue();
                         
                         // Delete config.
                         entry.getValue().deleteDirectory();
@@ -293,6 +299,29 @@ public final class ItemcaseManager {
                     }
                 }
             }
+            
+            // Remove world file.
+            ItemcaseManager.this.worldFiles.values().remove(worldFile);
+            
+            // List to store itemcases of this world.
+            ArrayList<Itemcase> itemcases = new ArrayList();
+            
+            // For every itemcase.
+            for(Itemcase itemcase : ItemcaseManager.this.itemcases) {
+                
+                // Check if itemcase was in deleted world.
+                if(itemcase.getLocation().getWorld().getName() == worldName) {
+                    
+                    // Despawn item.
+                    itemcase.despawnItem();
+                    
+                    // Add to list.
+                    itemcases.add(itemcase);
+                }
+            }
+            
+            // Remove all itemcases that were in this world from list.
+            ItemcaseManager.this.itemcases.removeAll(itemcases);
         }
     }
     
