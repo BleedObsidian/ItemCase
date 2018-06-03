@@ -83,6 +83,29 @@ public class WorldFile extends ConfigurationFile {
     }
     
     /**
+     * Deletes the given Itemcase from config.
+     * 
+     * @param itemcase Itemcase.
+     * @throws IOException
+     */
+    public void deleteItemcase(Itemcase itemcase) throws IOException {
+        
+        // Get block coordinates of Itemcase.
+        int blockX = itemcase.getLocation().getBlockX();
+        int blockY = itemcase.getLocation().getBlockY();
+        int blockZ = itemcase.getLocation().getBlockZ();
+        
+        // Create a unique key for this itemcase based on location.
+        String key = "itemcases." + blockX + "/" + blockY + "/" + blockZ;
+        
+        // Delete itemcase.
+        this.file.set(key, null);
+        
+        // Attempt to save to file.
+        this.save(ItemCaseCore.instance);
+    }
+    
+    /**
      * Attempts to load all itemcases from the config.
      * 
      * @return Array list of loaded itemcases.

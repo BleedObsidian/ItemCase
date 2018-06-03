@@ -135,6 +135,36 @@ public final class ItemcaseManager {
     }
     
     /**
+     * Destroy given Itemcase.
+     * 
+     * @param itemcase Itemcase.
+     */
+    public void destroyItemcase(Itemcase itemcase) {
+        
+        // Despawn Itemcase's item.
+        itemcase.despawnItem();
+        
+        // Remove itemcase from list.
+        this.itemcases.remove(itemcase);
+        
+        // Get config file for itemcase's world.
+        WorldFile file = this.worldFiles.get(itemcase.getLocation().getWorld());
+        
+         // Attempt to delete itemcase.
+        try {
+            
+            // Delete itemcase.
+            file.deleteItemcase(itemcase);
+            
+        } catch (IOException e) {
+            
+             // Log error.
+            ItemCaseCore.instance.getConsoleLogger().severe(
+                        "Failed to delete itemcase from config.", e);
+        }
+    }
+    
+    /**
      * Unload all currently loaded Itemcases.
      */
     public void unloadItemcases() {
@@ -181,6 +211,29 @@ public final class ItemcaseManager {
         
         // Otherwise return false.
         return false;
+    }
+    
+    /**
+     * Attempt to get the itemcase at the given location.
+     * 
+     * @param location Location.
+     * @return ItemCase.
+     */
+    public Itemcase getItemcase(Location location) {
+        
+        // For every itemcase.
+        for(Itemcase itemcase : this.itemcases) {
+            
+            // Check if location matches.
+            if(itemcase.getLocation().equals(location)) {
+                
+                // Return itemcase.
+                return itemcase;
+            }
+        }
+        
+        // No itemcase found.
+        return null;
     }
     
     /**

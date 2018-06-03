@@ -52,3 +52,17 @@ command:
         
         # Shown to the player upon successful creation.
         success: "ItemCase created."
+    
+    # Messages shown when using the 'destroy' command.
+    destroy:
+        
+        # Shown when a player uses the destroy command but is not looking at
+        # an itemcase.
+        invalid-location: "This block is not an ItemCase."
+        
+        # Shown when a player tries to destroy another persons itemcase when
+        # they do not have permission itemcase.destroy.other.
+        not-owner: "You do not own this ItemCase."
+        
+        # Shown to the player upon successful deletion.
+        success: "ItemCase destroyed."
