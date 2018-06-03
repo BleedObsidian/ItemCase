@@ -124,6 +124,23 @@ public class ConfigurationFile {
     }
     
     /**
+     * Delete this configuration file, non-jar only.
+     * 
+     * @param plugin JavaPlugin.
+     */
+    public void delete(JavaPlugin plugin) {
+        
+        // Create file reference.
+        File fileReference = new File(plugin.getDataFolder(), this.name);
+        
+        // Nullify reference.
+        this.file = null;
+        
+        // Delete file.
+        fileReference.delete();
+    }
+    
+    /**
      * Attempt to copy the default configuration file from the given plugin's
      * jar to the data folder.
      * 

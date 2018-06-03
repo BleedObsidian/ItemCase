@@ -17,9 +17,13 @@ package com.gmail.bleedobsidian.itemcase.managers;
 import com.gmail.bleedobsidian.itemcase.ItemCaseCore;
 import com.gmail.bleedobsidian.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.configurations.WorldFile;
+import com.onarandombox.MultiverseCore.event.MVWorldDeleteEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -259,6 +263,36 @@ public final class ItemcaseManager {
             
             // Request itemcases to be loaded.
             ItemcaseManager.this.loadItemcases(world);
+        }
+        
+        @EventHandler(priority = EventPriority.MONITOR)
+        public void onWorldDeleteEvent(MVWorldDeleteEvent event) {
+            
+            // Get world name.
+            String worldName = event.getWorld().getName();
+            
+            // For every entry.
+            for(Entry<World, WorldFile> entry :
+                ItemcaseManager.this.worldFiles.entrySet()) {
+                
+                // Check if world name matches.
+                if(entry.getKey().getName() == worldName) {
+                    
+                    // Attempt to delete config.
+                    try {
+                        
+                        // Delete config.
+                        entry.getValue().deleteDirectory();
+                        
+                    } catch (IOException e) {
+                        
+                         // Log error.
+                        ItemCaseCore.instance.getConsoleLogger().severe(
+                            "Failed to delete itemcase config for world:"
+                                    + worldName, e);
+                    }
+                }
+            }
         }
     }
     

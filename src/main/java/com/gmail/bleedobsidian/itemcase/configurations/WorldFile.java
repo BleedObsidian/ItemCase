@@ -17,16 +17,21 @@ package com.gmail.bleedobsidian.itemcase.configurations;
 import com.gmail.bleedobsidian.itemcase.ConfigurationFile;
 import com.gmail.bleedobsidian.itemcase.ItemCaseCore;
 import com.gmail.bleedobsidian.itemcase.Itemcase;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.multiverse.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * A configuration file that holds all Itemcase saves for a specific world.
@@ -160,5 +165,23 @@ public class WorldFile extends ConfigurationFile {
         
         // Return list of loaded itemcases.
         return itemcases;
+    }
+    
+    /**
+     * Delete directory and config.
+     * 
+     * @throws IOException
+     */
+    public void deleteDirectory() throws IOException {
+        
+        // Create file reference.
+        File fileReference = new File(ItemCaseCore.instance.getDataFolder(),
+                this.world.getName());
+        
+        // Nullify reference.
+        this.file = null;
+            
+        // Delete directory.
+        FileUtils.deleteDirectory(fileReference);
     }
 }
