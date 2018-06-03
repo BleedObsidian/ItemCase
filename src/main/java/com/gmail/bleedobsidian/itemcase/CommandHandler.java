@@ -14,7 +14,7 @@
  */
 package com.gmail.bleedobsidian.itemcase;
 
-import com.gmail.bleedobsidian.itemcase.commands.CreateCommand;
+import com.gmail.bleedobsidian.itemcase.commands.ModifyCommand;
 import com.gmail.bleedobsidian.itemcase.commands.DestroyCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -46,7 +46,7 @@ public final class CommandHandler implements CommandExecutor {
         switch(args[0]) {
             
             case "create":
-                new CreateCommand().execute(sender, label, args);
+                new ModifyCommand().execute(sender, label, args);
                 break;
             case "destroy":
                 new DestroyCommand().execute(sender, label, args);

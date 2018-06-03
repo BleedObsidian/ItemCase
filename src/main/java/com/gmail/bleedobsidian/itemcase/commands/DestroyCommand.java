@@ -24,7 +24,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
- * A command handler for the 'create' command.
+ * A command handler for the 'destroy' command.
  * 
  * @author Jesse Prescott (BleedObsidian)
  */
