@@ -33,6 +33,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -45,6 +46,24 @@ import org.bukkit.util.Vector;
  * @author Jesse Prescott (BleedObsidian)
  */
 public final class Itemcase {
+    
+    /**
+     * Types of Itemcase.
+     */
+    public static enum Type {
+        SHOWCASE,
+        SHOP_BUY,
+        SHOP_SELL,
+        SHOP_MULTI
+    };
+    
+    /**
+     * Storage types.
+     */
+    public static enum StorageType {
+        FINITE,
+        INFINITE
+    }
     
     /**
      * The ItemStack that this itemcase is showing.
@@ -77,14 +96,43 @@ public final class Itemcase {
     private Item displayItem;
     
     /**
+     * This itemcase's Type.
+     */
+    private Type type = Type.SHOWCASE;
+    
+    /**
+     * The storage type of this itemcase.
+     */
+    private StorageType storageType = StorageType.FINITE;
+    
+    /**
+     * The storage of this itemcase.
+     */
+    private Inventory storage;
+    
+    /**
+     * The buy price of this itemcase.
+     */
+    private double buyPrice = 0;
+    
+    /**
+     * The sell price of this itemcase.
+     */
+    private double sellPrice = 0;
+    
+    /**
      * Constructor.
      * 
+     * @param type The type of Itemcase.
      * @param itemStack The ItemStack to be displayed.
      * @param location The location of the itemcase.
      * @param owner The owner of this itemcase.
      */
-    public Itemcase(ItemStack itemStack, Location location,
+    public Itemcase(Type type, ItemStack itemStack, Location location,
             OfflinePlayer owner) {
+        
+        // Set type.
+        this.type = type;
         
         // Set item stack and ensure stack size is 1.
         this.itemStack = itemStack.clone();
@@ -233,6 +281,96 @@ public final class Itemcase {
         
         // Display item.
         return this.displayItem;
+    }
+    
+    /**
+     * @param type Type.
+     */
+    public void setType(Type type) {
+        
+        // Set type.
+        this.type = type;
+    }
+    
+    /**
+     * @return Type.
+     */
+    public Type getType() {
+        
+        // Return type.
+        return this.type;
+    }
+    
+    /**
+     * @param storageType StorageType.
+     */
+    public void setStorageType(StorageType storageType) {
+        
+        // Set storage type.
+        this.storageType= storageType;
+    }
+    
+    /**
+     * @return Storage Type.
+     */
+    public StorageType getStorageType() {
+        
+        // Return storage type.
+        return this.storageType;
+    }
+    
+    /**
+     * @param inventory Inventory.
+     */
+    public void setStorage(Inventory inventory) {
+        
+        // Set inventory.
+        this.storage = inventory;
+    }
+    
+    /**
+     * @return Inventory.
+     */
+    public Inventory getStorage() {
+        
+        // Return inventory.
+        return this.storage;
+    }
+    
+    /**
+     * @param buyPrice Buy price.
+     */
+    public void setBuyPrice(double buyPrice) {
+        
+        // Set price.
+        this.buyPrice = buyPrice;
+    }
+    
+    /**
+     * @return Buy price.
+     */
+    public double getBuyPrice() {
+        
+        // Return price.
+        return this.buyPrice;
+    }
+    
+    /**
+     * @param buyPrice Sell price.
+     */
+    public void setSellPrice(double sellPrice) {
+        
+        // Set price.
+        this.sellPrice = sellPrice;
+    }
+    
+    /**
+     * @return Sell price.
+     */
+    public double getSellPrice() {
+        
+        // Return price.
+        return this.sellPrice;
     }
     
     /**

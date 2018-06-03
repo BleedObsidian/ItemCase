@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -116,7 +114,8 @@ public final class ItemcaseManager {
             OfflinePlayer owner) {
         
         // Create new itemcase instance.
-        Itemcase itemcase = new Itemcase(itemStack, location, owner);
+        Itemcase itemcase = new Itemcase(Itemcase.Type.SHOWCASE, itemStack,
+                location, owner);
         
         // Add itemcase to the list.
         this.itemcases.add(itemcase);

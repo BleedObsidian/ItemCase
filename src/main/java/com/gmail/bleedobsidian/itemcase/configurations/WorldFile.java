@@ -17,21 +17,24 @@ package com.gmail.bleedobsidian.itemcase.configurations;
 import com.gmail.bleedobsidian.itemcase.ConfigurationFile;
 import com.gmail.bleedobsidian.itemcase.ItemCaseCore;
 import com.gmail.bleedobsidian.itemcase.Itemcase;
+import com.gmail.bleedobsidian.itemcase.Itemcase.StorageType;
+import com.gmail.bleedobsidian.itemcase.Itemcase.Type;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.multiverse.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * A configuration file that holds all Itemcase saves for a specific world.
@@ -75,6 +78,9 @@ public class WorldFile extends ConfigurationFile {
         // Create a unique key for this itemcase based on location.
         String key = "itemcases." + blockX + "/" + blockY + "/" + blockZ + ".";
         
+        // Set this Itemcase's type.
+        this.file.set(key + "type", itemcase.getType().name());
+        
         // Set this Itemcase's Owner.
         String uuid = itemcase.getOwner().getUniqueId().toString();
         this.file.set(key + "owner", uuid);
@@ -82,6 +88,45 @@ public class WorldFile extends ConfigurationFile {
         // Set this Itemcase's ItemStack.
         Map<String, Object> itemstack = itemcase.getItemStack().serialize();
         this.file.set(key + "itemstack", itemstack);
+        
+        // If itemcase is a shop.
+        if(itemcase.getType() != Type.SHOWCASE) {
+            
+            // Set storage type.
+            this.file.set(key + "shop.storage-type",
+                    itemcase.getStorageType().name());
+            
+            // If shop has finite storage.
+            if(itemcase.getStorageType() == StorageType.FINITE) {
+                
+                // Serialize inventory.
+                Map<String, Object> inventory = 
+                        this.serializeInventory(itemcase.getStorage());
+                
+                // Set inventory.
+                this.file.set(key + "shop.storage", inventory);
+            }
+            
+            // If this itemcase buys.
+            if(itemcase.getType() == Type.SHOP_BUY ||
+                    itemcase.getType() == Type.SHOP_MULTI) {
+                
+                // Set buy price.
+                this.file.set(key + "shop.buy-price", itemcase.getBuyPrice());
+            }
+            
+            // If this itemcase sells.
+            if(itemcase.getType() == Type.SHOP_SELL ||
+                    itemcase.getType() == Type.SHOP_MULTI) {
+                
+                // Set sell price.
+                this.file.set(key + "shop.sell-price", itemcase.getSellPrice());
+            }
+        } else {
+            
+            // Set shop section to null.
+            this.file.set(key + "shop", null);
+        }
         
         // Attempt to save to file.
         this.save(ItemCaseCore.instance);
@@ -146,6 +191,10 @@ public class WorldFile extends ConfigurationFile {
             Location location = new Location(this.world, blockX, blockY,
                     blockZ);
             
+            // Get type.
+            Type type = Itemcase.Type.valueOf(
+                    this.file.getString(key + ".type"));
+            
             // Get owner.
             UUID uuid = UUID.fromString(this.file.getString(key + ".owner"));
             OfflinePlayer owner = Bukkit.getOfflinePlayer(uuid);
@@ -157,7 +206,52 @@ public class WorldFile extends ConfigurationFile {
             ItemStack itemstack = ItemStack.deserialize(itemstackMap);
             
             // Create itemcase object.
-            Itemcase itemcase = new Itemcase(itemstack, location, owner);
+            Itemcase itemcase = new Itemcase(type, itemstack, location, owner);
+            
+            // If itemcase is a shop.
+            if(type != Type.SHOWCASE) {
+                
+                // Get storage type.
+                StorageType storageType = StorageType.valueOf(
+                        this.file.getString(key + "shop.storage-type"));
+                
+                // Set storage type.
+                itemcase.setStorageType(storageType);
+                
+                // If itemcase has finite storage.
+                if(storageType == StorageType.FINITE) {
+                    
+                    // Deserialse inventory.
+                    Inventory inventory = this.deserializeInventory(
+                            this.file.getConfigurationSection(
+                                    key + "shop.storage").getValues(true));
+                    
+                    // Set inventory.
+                    itemcase.setStorage(inventory);
+                }
+                
+                // If this itemcase buys.
+                if(type == Type.SHOP_BUY || type == Type.SHOP_MULTI) {
+
+                    // Get buy price.
+                    double buyPrice = 
+                            this.file.getDouble(key + "shop.buy-price");
+                    
+                    // Set buy price.
+                    itemcase.setBuyPrice(buyPrice);
+                }
+
+                // If this itemcase sells.
+                if(type == Type.SHOP_SELL || type == Type.SHOP_MULTI) {
+
+                    // Get sell price.
+                    double sellPrice = 
+                            this.file.getDouble(key + "shop.sell-price");
+                    
+                    // Set sell price.
+                    itemcase.setSellPrice(sellPrice);
+                }
+            }
             
             // Add to list.
             itemcases.add(itemcase);
@@ -183,5 +277,80 @@ public class WorldFile extends ConfigurationFile {
             
         // Delete directory.
         FileUtils.deleteDirectory(fileReference);
+    }
+    
+    /**
+     * Serialize the given inventory.
+     * 
+     * @param inventory Inventory.
+     * @return Map.
+     */
+    private Map<String, Object> serializeInventory(Inventory inventory) {
+        
+        // Create map.
+        Map<String, Object> map = new HashMap();
+        
+        // Set size.
+        map.put("size", inventory.getSize());
+        
+        // Set name.
+        map.put("name", inventory.getName());
+        
+        // Loop through all content slots.
+        for(int i = 0; i < inventory.getSize(); i++) {
+            
+            // Check if content slot has any items.
+            if (inventory.getItem(i) != null) {
+                
+                // Serialize itemstack in content slot.
+                map.put("" + i, inventory.getItem(i).serialize());
+            }
+        }
+        
+        // Return map.
+        return map;
+    }
+    
+    /**
+     * Deserialize inventory from given map.
+     * 
+     * @param map Map.
+     * @return Inventory.
+     */
+    private Inventory deserializeInventory(Map<String, Object> map) {
+        
+        // Get size.
+        int size = Integer.parseInt((String) map.get("size"));
+        
+        // Get name.
+        String name = (String) map.get("name");
+        
+        // Create inventory.
+        Inventory inventory = Bukkit.createInventory(null, size, name);
+        
+        // For every map entry.
+        for(Entry<String, Object> entry : map.entrySet()) {
+            
+            // Check entry is parameter.
+            if(entry.getKey().equals("size") ||
+                    entry.getKey().equals("name")) {
+                
+                // Skip.
+                continue;
+            }
+            
+            // Get slot.
+            int slot = Integer.parseInt(entry.getKey());
+            
+            // Deserialize item.
+            ItemStack item = ItemStack.deserialize(
+                    (Map<String, Object>) entry.getValue());
+            
+            // Set item in slot.
+            inventory.setItem(slot, item);
+        }
+        
+        // Return inventory.
+        return inventory;
     }
 }
