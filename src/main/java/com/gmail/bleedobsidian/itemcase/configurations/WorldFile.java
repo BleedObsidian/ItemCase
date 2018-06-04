@@ -319,7 +319,7 @@ public class WorldFile extends ConfigurationFile {
     private Inventory deserializeInventory(Map<String, Object> map) {
         
         // Get size.
-        int size = Integer.parseInt((String) map.get("size"));
+        int size = (int) map.get("size");
         
         // Get name.
         String name = (String) map.get("name");

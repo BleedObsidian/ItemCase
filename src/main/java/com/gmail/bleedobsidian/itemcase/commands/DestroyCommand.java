@@ -51,8 +51,8 @@ public final class DestroyCommand implements Command {
         // Cast sender to player.
         Player player = (Player) sender;
         
-        // Check if player has permission.
-        if(!player.hasPermission("itemcase.destroy")) {
+        // Check if player has permission (Uses create permission).
+        if(!player.hasPermission("itemcase.create")) {
             
             // Send message.
             chatLogger.message(player, "command.permission");
@@ -74,7 +74,7 @@ public final class DestroyCommand implements Command {
         if(!manager.isItemcase(target)) {
             
             // Show message.
-            chatLogger.message(player, "command.destroy.invalid-location");
+            chatLogger.message(player, "command.invalid-location");
             
             // Exit.
             return;
@@ -93,7 +93,7 @@ public final class DestroyCommand implements Command {
             if(!player.hasPermission("itemcase.destroy.other")) {
                 
                 // Show message.
-                chatLogger.message(player, "command.destroy.not-owner");
+                chatLogger.message(player, "command.not-owner");
                 
                 // Exit.
                 return;

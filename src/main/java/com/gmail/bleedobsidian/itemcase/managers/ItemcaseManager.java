@@ -104,6 +104,30 @@ public final class ItemcaseManager {
     }
     
     /**
+     * Save given Itemcase.
+     * 
+     * @param itemcase Itemcase.
+     */
+    public void saveItemcases(Itemcase itemcase) {
+        
+        // Get world file.
+        WorldFile file = this.worldFiles.get(itemcase.getLocation().getWorld());
+        
+        // Attempt to save itemcase.
+        try {
+            
+            // Save itemcase.
+            file.saveItemcase(itemcase);
+            
+        } catch (IOException e) {
+            
+             // Log error.
+            ItemCaseCore.instance.getConsoleLogger().severe(
+                        "Failed to save itemcase to config.", e);
+        }
+    }
+    
+    /**
      * Create a new Itemcase.
      * 
      * @param itemStack The ItemStack to be displayed.

@@ -17,3 +17,13 @@ commands:
 permissions:
     itemcase.create:
         description: Create and destroy showcase itemcases.
+    itemcase.create.shop.buy:
+        description: Create itemcases that can buy things from players.
+    itemcase.create.shop.sell:
+        description: Create itemcases that can sell things to players.
+    itemcase.create.shop.infinite:
+        description: Create an itemcase shop that has infinite items to buy/sell.
+    itemcase.modify.other:
+        description: Modify flags of itemcases you don't own.
+    itemcase.destroy.other:
+        description: Destroy an itemcase you don't own.

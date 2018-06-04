@@ -31,9 +31,16 @@ command:
     # player.
     not-player: "You must be a player to use this command."
     
+    # Shown when a player tries to destroy another persons itemcase when
+    # they do not have permission itemcase.destroy.other.
+    not-owner: "You do not own this ItemCase."
+    
     # Shown when a user tries to execute a command and they do not have the
     # required permission.
     permission: "You do not have permission to use this command."
+    
+    # Shown when a player uses a command but is not looking at an itemcase.
+    invalid-location: "This block is not an ItemCase."
     
     # Messages shown when using the 'create' command.
     create:
@@ -56,13 +63,26 @@ command:
     # Messages shown when using the 'destroy' command.
     destroy:
         
-        # Shown when a player uses the destroy command but is not looking at
-        # an itemcase.
-        invalid-location: "This block is not an ItemCase."
-        
-        # Shown when a player tries to destroy another persons itemcase when
-        # they do not have permission itemcase.destroy.other.
-        not-owner: "You do not own this ItemCase."
-        
         # Shown to the player upon successful deletion.
         success: "ItemCase destroyed."
+    
+    # Messages shwon when using the 'modify' command. 
+    modify:
+        
+        # Shown to the player when trying to set storage type on an itemcase
+        # that is not a shop.
+        not-shop: "This ItemCase is not a shop."
+        
+        # Shown to the player when trying to set the sell price of an ItemCase
+        # that only buys items.
+        sell-only: "This ItemCase only sells items."
+        
+        # Shown to the player when trying to set the buy price of an ItemCase
+        # that only sells items.
+        buy-only: "This ItemCase only buys items."
+        
+        # Shown to the player when setting a buy/sell price that is invalid.
+        invalid-price: "Invalid price."
+        
+        # Shown to the player upon successful modification.
+        success: "ItemCase flag modified."

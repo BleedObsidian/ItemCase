@@ -47,6 +47,8 @@ import org.bukkit.util.Vector;
  */
 public final class Itemcase {
     
+    //TODO: Despawn items that were left from a config delete.
+    
     /**
      * Types of Itemcase.
      */
