@@ -82,6 +82,23 @@ public final class StorageCommand implements Command {
         Itemcase itemcase = 
                 ItemCaseCore.instance.getItemcaseManager().getItemcase(target);
         
+        // Get owner.
+        OfflinePlayer owner = itemcase.getOwner();
+        
+        // Check if this player owns this itemcase.
+        if(!owner.equals(player)) {
+            
+            // Check if player is allowed to modify other peoples itemcases.
+            if(!player.hasPermission("itemcase.modify.other")) {
+                
+                // Show message.
+                chatLogger.message(player, "command.not-owner");
+                
+                // Exit.
+                return;
+            }
+        }
+        
         // Check if itemcase is a shop.
         if(itemcase.getType() == Type.SHOWCASE) {
             
@@ -100,23 +117,6 @@ public final class StorageCommand implements Command {
             
             // Exit.
             return;
-        }
-        
-        // Get owner.
-        OfflinePlayer owner = itemcase.getOwner();
-        
-        // Check if this player owns this itemcase.
-        if(!owner.equals(player)) {
-            
-            // Check if player is allowed to modify other peoples itemcases.
-            if(!player.hasPermission("itemcase.modify.other")) {
-                
-                // Show message.
-                chatLogger.message(player, "command.not-owner");
-                
-                // Exit.
-                return;
-            }
         }
         
         // Open itemcase storage to player.
