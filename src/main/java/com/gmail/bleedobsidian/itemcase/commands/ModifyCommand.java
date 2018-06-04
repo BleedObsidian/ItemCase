@@ -81,7 +81,7 @@ public final class ModifyCommand implements Command {
         // Get the players target block.
         target = player.getTargetBlock(null, 3).getLocation();
         
-        // Check if itemcase already exists here.
+        // Check if itemcase exists here.
         if(!ItemCaseCore.instance.getItemcaseManager().isItemcase(target)) {
             
             // Show message.
@@ -262,7 +262,7 @@ public final class ModifyCommand implements Command {
             
             // Set storage.
             itemcase.setStorage(Bukkit.createInventory(
-                    null, 54, "ItemCase Storage"));
+                    null, 54, Itemcase.INVENTORY_NAME));
         }
         
         // Save itemcase.
@@ -290,7 +290,7 @@ public final class ModifyCommand implements Command {
         if(itemcase.getType() == Type.SHOWCASE) {
             
             // Show message.
-            chatLogger.message(player, "command.modify.not-shop");
+            chatLogger.message(player, "command.not-shop");
             
             // Exit.
             return;
@@ -372,7 +372,7 @@ public final class ModifyCommand implements Command {
         if(itemcase.getType() == Type.SHOWCASE) {
             
             // Show message.
-            chatLogger.message(player, "command.modify.not-shop");
+            chatLogger.message(player, "command.not-shop");
             
             // Exit.
             return;
@@ -442,7 +442,7 @@ public final class ModifyCommand implements Command {
         if(itemcase.getType() == Type.SHOWCASE) {
             
             // Show message.
-            chatLogger.message(player, "command.modify.not-shop");
+            chatLogger.message(player, "command.not-shop");
             
             // Exit.
             return;

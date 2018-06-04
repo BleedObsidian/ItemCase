@@ -32,6 +32,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -223,7 +224,7 @@ public class WorldFile extends ConfigurationFile {
                     // Deserialse inventory.
                     Inventory inventory = this.deserializeInventory(
                             this.file.getConfigurationSection(
-                                    key + "shop.storage").getValues(true));
+                                    key + "shop.storage").getValues(false));
                     
                     // Set inventory.
                     itemcase.setStorage(inventory);
@@ -341,9 +342,12 @@ public class WorldFile extends ConfigurationFile {
             // Get slot.
             int slot = Integer.parseInt(entry.getKey());
             
+            // Get memory section.
+            MemorySection section = (MemorySection) entry.getValue();
+            
             // Deserialize item.
-            ItemStack item = ItemStack.deserialize(
-                    (Map<String, Object>) entry.getValue());
+            ItemStack item = ItemStack.deserialize((Map<String, Object>) 
+                    section.getValues(true));
             
             // Set item in slot.
             inventory.setItem(slot, item);

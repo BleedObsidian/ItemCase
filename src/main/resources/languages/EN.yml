@@ -42,6 +42,11 @@ command:
     # Shown when a player uses a command but is not looking at an itemcase.
     invalid-location: "This block is not an ItemCase."
     
+    # Shown to the player when trying to set storage type on an itemcase
+    # that is not a shop or access the storage of an itemcase that is not a
+    # shop.
+    not-shop: "This ItemCase is not a shop."
+    
     # Messages shown when using the 'create' command.
     create:
         
@@ -69,10 +74,6 @@ command:
     # Messages shwon when using the 'modify' command. 
     modify:
         
-        # Shown to the player when trying to set storage type on an itemcase
-        # that is not a shop.
-        not-shop: "This ItemCase is not a shop."
-        
         # Shown to the player when trying to set the sell price of an ItemCase
         # that only buys items.
         sell-only: "This ItemCase only sells items."
@@ -86,3 +87,10 @@ command:
         
         # Shown to the player upon successful modification.
         success: "ItemCase flag modified."
+        
+    # Messages shown when using the 'storage' command.
+    storage:
+        
+        # Shown to the player when trying to access the storage of an infinite
+        # itemcase shop.
+        infinite: "This ItemCase has infinite items to buy/sell, therefore has no storage."

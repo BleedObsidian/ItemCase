@@ -133,7 +133,7 @@ public final class ItemCaseCore extends JavaPlugin {
         this.itemcaseManager.unloadItemcases();
         
         // Log.
-        this.consoleLogger.info("config.info.unloaded");
+        this.consoleLogger.info("console.info.unloaded");
     }
     
     /**

@@ -50,6 +50,11 @@ public final class Itemcase {
     //TODO: Despawn items that were left from a config delete.
     
     /**
+     * The name of the inventory for Itemcase storage.
+     */
+    public static final String INVENTORY_NAME = "ItemCase Storage";
+    
+    /**
      * Types of Itemcase.
      */
     public static enum Type {

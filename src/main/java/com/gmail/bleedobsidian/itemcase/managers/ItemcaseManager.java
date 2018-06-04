@@ -16,12 +16,16 @@ package com.gmail.bleedobsidian.itemcase.managers;
 
 import com.gmail.bleedobsidian.itemcase.ItemCaseCore;
 import com.gmail.bleedobsidian.itemcase.Itemcase;
+import com.gmail.bleedobsidian.itemcase.Itemcase.StorageType;
+import com.gmail.bleedobsidian.itemcase.Itemcase.Type;
 import com.gmail.bleedobsidian.itemcase.configurations.WorldFile;
 import com.onarandombox.MultiverseCore.event.MVWorldDeleteEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -29,6 +33,7 @@ import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -345,6 +350,59 @@ public final class ItemcaseManager {
             
             // Remove all itemcases that were in this world from list.
             ItemcaseManager.this.itemcases.removeAll(itemcases);
+        }
+        
+        @EventHandler(priority = EventPriority.MONITOR)
+        public void onInventoryCloseEvent(InventoryCloseEvent event) {
+            
+            // Get inventory name.
+            String name = event.getInventory().getName();
+            
+            // If inventory is Itemcase inventory.
+            if(!name.equals(Itemcase.INVENTORY_NAME)) {
+                
+                // Exit.
+                return;
+            }
+            
+            // For every Itemcase.
+            for(Itemcase itemcase : ItemcaseManager.this.itemcases) {
+                
+                // If itemcase is not a shop it wont have storage.
+                if(itemcase.getType() == Type.SHOWCASE) {
+                    
+                    // Skip.
+                    continue;
+                }
+                
+                // If itemcase is inifinite, it wont have storage.
+                if(itemcase.getStorageType() == StorageType.INFINITE) {
+                    
+                    // Skip.
+                    continue;
+                }
+                
+                // If inventory belongs to this itemcase.
+                if(itemcase.getStorage().equals(event.getInventory())) {
+                    
+                    // Get world file.
+                    WorldFile file = ItemcaseManager.this.worldFiles.get(
+                            itemcase.getLocation().getWorld());
+                    
+                    // Attempt to save itemcase.
+                    try {
+                        
+                        // Save itemcase.
+                        file.saveItemcase(itemcase);
+                        
+                    } catch (IOException e) {
+                        
+                         // Log error.
+                        ItemCaseCore.instance.getConsoleLogger().severe(
+                            "Failed to save itemcase after storage change.", e);
+                    }
+                }
+            }
         }
     }
     

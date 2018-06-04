@@ -17,6 +17,7 @@ package com.gmail.bleedobsidian.itemcase;
 import com.gmail.bleedobsidian.itemcase.commands.CreateCommand;
 import com.gmail.bleedobsidian.itemcase.commands.ModifyCommand;
 import com.gmail.bleedobsidian.itemcase.commands.DestroyCommand;
+import com.gmail.bleedobsidian.itemcase.commands.StorageCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -54,6 +55,9 @@ public final class CommandHandler implements CommandExecutor {
                 break;
             case "modify":
                 new ModifyCommand().execute(sender, label, args);
+                break;
+            case "storage":
+                new StorageCommand().execute(sender, label, args);
                 break;
             default:
                 this.showHelp(sender, label);
