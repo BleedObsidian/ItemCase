@@ -27,6 +27,10 @@ command:
     # %COMMAND% = The command usage syntax.
     itemcase-help: "Usage: %COMMAND%"
     
+    # Shown when a user incorrectly uses the main itemcase command.
+    # %LABEL% = The label that was used.
+    command-help: "To view more: /%LABEL% [command] help"
+    
     # Shown when a user tries to execute a command and they are not an in game
     # player.
     not-player: "You must be a player to use this command."
@@ -50,6 +54,9 @@ command:
     # Messages shown when using the 'create' command.
     create:
         
+        # Shown to the player when asking for help.
+        help: "Creates a new itemcase with the item in your main hand, at the block you are looking at."
+        
         # Shown to the player when they try to make an itemcase out of an
         # invalid block type.
         invalid-type: "This block cannot be used for an ItemCase."
@@ -68,11 +75,17 @@ command:
     # Messages shown when using the 'destroy' command.
     destroy:
         
+        # Shown to the player when asking for help.
+        help: "Destroy the itemcase you are looking at permanently."
+        
         # Shown to the player upon successful deletion.
         success: "ItemCase destroyed."
     
     # Messages shwon when using the 'modify' command. 
     modify:
+        
+        # Shown to the player when asking for help.
+        help: "Modify a flag of the itemcase you are looking at."
         
         # Shown to the player when trying to set the sell price of an ItemCase
         # that only buys items.
@@ -91,6 +104,31 @@ command:
     # Messages shown when using the 'storage' command.
     storage:
         
+        # Shown to the player when asking for help.
+        help: "View the storage of the itemcase you are looking at."
+        
         # Shown to the player when trying to access the storage of an infinite
         # itemcase shop.
         infinite: "This ItemCase has infinite items to buy/sell, therefore has no storage."
+       
+# Messages shown when ordering.
+order:
+    
+    # Shown when ordering.
+    # %ITEM_NAME% = The item being sold.
+    item: "Item: %ITEM_NAME%"
+    
+    # Shown when ordering.
+    # %BUY_PRICE% = The buy price.
+    buy-price: "Buy price: %BUY_PRICE%"
+    
+    # Shown when ordering.
+    # %SELL_PRICE% = The sell price.
+    sell-price: "Sell price: %SELL_PRICE%"
+    
+    # Shown when ordering.
+    # %AMOUNT% = The amount.
+    amount: "Amount: %AMOUNT%"
+    
+    # Shown when ordering.
+    help: "Help: /itemc order help"

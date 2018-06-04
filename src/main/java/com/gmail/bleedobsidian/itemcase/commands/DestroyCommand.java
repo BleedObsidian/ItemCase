@@ -76,7 +76,7 @@ public final class DestroyCommand implements Command {
         ItemcaseManager manager = ItemCaseCore.instance.getItemcaseManager();
 
         // Get the players target block.
-        target = player.getTargetBlock(null, 3).getLocation();
+        target = player.getTargetBlock(null, 5).getLocation();
         
         // Check this target is an itemcase.
         if(!manager.isItemcase(target)) {

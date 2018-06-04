@@ -19,6 +19,7 @@ import com.gmail.bleedobsidian.itemcase.ItemCaseCore;
 import com.gmail.bleedobsidian.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.Itemcase.StorageType;
 import com.gmail.bleedobsidian.itemcase.Itemcase.Type;
+import com.gmail.bleedobsidian.itemcase.LanguageTranslator;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -46,11 +47,18 @@ public final class StorageCommand implements Command {
             return;
         }
         
-         // Get chat logger.
-        ChatLogger chatLogger = ItemCaseCore.instance.getChatLogger();
-        
         // Cast sender to player.
         Player player = (Player) sender;
+        
+        // Check if player is asking for help.
+        if(this.isAskingForHelp(player, label, args)) {
+            
+            // Exit.
+            return;
+        }
+        
+         // Get chat logger.
+        ChatLogger chatLogger = ItemCaseCore.instance.getChatLogger();
         
         // Check if player has permission.
         if(!player.hasPermission("itemcase.create")) {
@@ -66,7 +74,7 @@ public final class StorageCommand implements Command {
         Location target = null;
 
         // Get the players target block.
-        target = player.getTargetBlock(null, 3).getLocation();
+        target = player.getTargetBlock(null, 5).getLocation();
         
         // Check if itemcase exists here.
         if(!ItemCaseCore.instance.getItemcaseManager().isItemcase(target)) {
@@ -121,5 +129,45 @@ public final class StorageCommand implements Command {
         
         // Open itemcase storage to player.
         player.openInventory(itemcase.getStorage());
+    }
+    
+    /**
+     * @return If the command sender is asking for help about this command.
+     */
+    public boolean isAskingForHelp(Player player, String label, String[] args) {
+        
+        // If args length equals 2.
+        if(args.length != 2) {
+            
+            // False.
+            return false;
+        }
+        
+        // Get argument.
+        String argument = args[1];
+        
+        // If not equal to help.
+        if(!argument.equalsIgnoreCase("help")) {
+            
+            return false;
+        }
+        
+        // Get chat logger.
+        ChatLogger chatLogger = ItemCaseCore.instance.getChatLogger();
+        
+        // Get translator.
+        LanguageTranslator translator = ItemCaseCore.instance.getTranslator();
+        
+        // Set placeholder.
+        translator.setPlaceholder("%COMMAND%", "/" + label + " storage");
+        
+        // Show command help.
+        chatLogger.message(player, "command.itemcase-help");
+        
+        // Show specific help.
+        chatLogger.message(player, "command.storage.help");
+        
+        // Return.
+        return true;
     }
 }

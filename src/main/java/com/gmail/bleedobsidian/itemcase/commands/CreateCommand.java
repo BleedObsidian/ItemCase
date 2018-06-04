@@ -80,7 +80,7 @@ public final class CreateCommand implements Command {
         ItemStack itemStack = null;
 
         // Get the players target block.
-        target = player.getTargetBlock(null, 3).getLocation();
+        target = player.getTargetBlock(null, 5).getLocation();
         
         // Check if itemcase already exists here.
         if(ItemCaseCore.instance.getItemcaseManager().isItemcase(target)) {

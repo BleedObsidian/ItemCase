@@ -15,7 +15,6 @@
 package com.gmail.bleedobsidian.itemcase.commands;
 
 import com.gmail.bleedobsidian.itemcase.ChatLogger;
-import com.gmail.bleedobsidian.itemcase.GenericLogger;
 import com.gmail.bleedobsidian.itemcase.ItemCaseCore;
 import com.gmail.bleedobsidian.itemcase.Itemcase;
 import com.gmail.bleedobsidian.itemcase.Itemcase.StorageType;
@@ -52,11 +51,8 @@ public final class ModifyCommand implements Command {
         // Cast sender to player.
         Player player = (Player) sender;
         
-        // Check command params have been given.
-        if(args.length != 3) {
-            
-            // Shop help message.
-            this.showHelp(player, label);
+        // Check if player is asking for help.
+        if(this.isAskingForHelp(player, label, args)) {
             
             // Exit.
             return;
@@ -79,7 +75,7 @@ public final class ModifyCommand implements Command {
         Location target = null;
 
         // Get the players target block.
-        target = player.getTargetBlock(null, 3).getLocation();
+        target = player.getTargetBlock(null, 5).getLocation();
         
         // Check if itemcase exists here.
         if(!ItemCaseCore.instance.getItemcaseManager().isItemcase(target)) {
@@ -482,6 +478,34 @@ public final class ModifyCommand implements Command {
         
         // Show message.
         chatLogger.message(player, "command.modify.success");
+    }
+    
+    /**
+     * @return If the command sender is asking for help about this command.
+     */
+    public boolean isAskingForHelp(Player player, String label, String[] args) {
+        
+        // If args length equals 2.
+        if(args.length != 2) {
+            
+            // False.
+            return false;
+        }
+        
+        // Get argument.
+        String argument = args[1];
+        
+        // If not equal to help.
+        if(!argument.equalsIgnoreCase("help")) {
+            
+            return false;
+        }
+        
+        // Show help.
+        this.showHelp(player, label);
+        
+        // Return.
+        return true;
     }
     
     /**
