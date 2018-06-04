@@ -49,11 +49,14 @@ public final class ModifyCommand implements Command {
             return;
         }
         
+        // Cast sender to player.
+        Player player = (Player) sender;
+        
         // Check command params have been given.
         if(args.length != 3) {
             
             // Shop help message.
-            this.showHelp(sender, label);
+            this.showHelp(player, label);
             
             // Exit.
             return;
@@ -61,9 +64,6 @@ public final class ModifyCommand implements Command {
         
         // Get chat logger.
         ChatLogger chatLogger = ItemCaseCore.instance.getChatLogger();
-        
-        // Cast sender to player.
-        Player player = (Player) sender;
         
         // Check if player has permission (Uses create permission).
         if(!player.hasPermission("itemcase.create")) {
@@ -133,7 +133,7 @@ public final class ModifyCommand implements Command {
                 this.sellPriceFlag(label, player, itemcase, value);
                 break;
             default:
-                this.showHelp(sender, label);
+                this.showHelp(player, label);
                 break;
         }
         
@@ -489,7 +489,7 @@ public final class ModifyCommand implements Command {
      * 
      * @param sender CommandSender.
      */
-    private void showHelp(CommandSender sender, String label) {
+    private void showHelp(Player player, String label) {
         
         // Get translator.
         LanguageTranslator translator = ItemCaseCore.instance.getTranslator();
@@ -497,45 +497,33 @@ public final class ModifyCommand implements Command {
         // Set placeholder.
         translator.setPlaceholder("%COMMAND%", 
                 "/" + label + " modify [flag] [value]");
-        
-        // Check if sender is a player or console.
-        if(sender instanceof Player) {
             
-            // Cast sender to player.
-            Player player = (Player) sender;
-            
-            // Get chat logger.
-            ChatLogger logger = ItemCaseCore.instance.getChatLogger();
-            
-            // Send message to player.
-            logger.message(player, "command.itemcase-help");
-            
-            // Send flag help.
-            logger.message(player, "[flag] [value]:");
-            
-            // Send flag help.
-            logger.message(player, 
-                    "   type [showcase/shop_buy/shop_sell/shop_multi]");
-            
-            // Send flag help.
-            logger.message(player, 
-                    "   storage_type [finite/infinite]");
-            
-            // Send flag help.
-            logger.message(player, 
-                    "   buy_price [price]");
-            
-            // Send flag help.
-            logger.message(player, 
-                    "   sell_price [price]");
-            
-        } else {
-            
-            // Get console logger.
-            GenericLogger logger = ItemCaseCore.instance.getGenericLogger();
-            
-            // Send console message.
-            logger.message(sender, "command.itemcase-help");
-        }
+        // Get chat logger.
+        ChatLogger logger = ItemCaseCore.instance.getChatLogger();
+
+        // Send message to player.
+        logger.message(player, "command.itemcase-help");
+
+        // Send message to player.
+        logger.message(player, "command.modify.help");
+
+        // Send flag help.
+        logger.message(player, "[flag] [value]:");
+
+        // Send flag help.
+        logger.message(player, 
+                "   type [showcase/shop_buy/shop_sell/shop_multi]");
+
+        // Send flag help.
+        logger.message(player, 
+                "   storage_type [finite/infinite]");
+
+        // Send flag help.
+        logger.message(player, 
+                "   buy_price [price]");
+
+        // Send flag help.
+        logger.message(player, 
+                "   sell_price [price]");
     }
 }
