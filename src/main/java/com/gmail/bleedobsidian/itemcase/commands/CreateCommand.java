@@ -159,6 +159,7 @@ public final class CreateCommand implements Command {
         // Show specific help.
         chatLogger.message(player, "command.create.help");
         
+        // Return.
         return true;
     }
 }
