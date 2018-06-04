@@ -16,6 +16,7 @@ package com.gmail.bleedobsidian.itemcase.commands;
 
 import com.gmail.bleedobsidian.itemcase.ChatLogger;
 import com.gmail.bleedobsidian.itemcase.ItemCaseCore;
+import com.gmail.bleedobsidian.itemcase.LanguageTranslator;
 import java.util.ArrayList;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,11 +46,18 @@ public final class CreateCommand implements Command {
             return;
         }
         
-         // Get chat logger.
-        ChatLogger chatLogger = ItemCaseCore.instance.getChatLogger();
-        
         // Cast sender to player.
         Player player = (Player) sender;
+        
+        // Check if player is asking for help.
+        if(this.isAskingForHelp(player, label, args)) {
+            
+            // Exit.
+            return;
+        }
+        
+        // Get chat logger.
+        ChatLogger chatLogger = ItemCaseCore.instance.getChatLogger();
         
         // Check if player has permission.
         if(!player.hasPermission("itemcase.create")) {
@@ -113,5 +121,44 @@ public final class CreateCommand implements Command {
         
         // Show message.
         chatLogger.message(player, "command.create.success");
+    }
+    
+    /**
+     * @return If the command sender is asking for help about this command.
+     */
+    public boolean isAskingForHelp(Player player, String label, String[] args) {
+        
+        // If args length equals 2.
+        if(args.length != 2) {
+            
+            // False.
+            return false;
+        }
+        
+        // Get argument.
+        String argument = args[1];
+        
+        // If not equal to help.
+        if(!argument.equalsIgnoreCase("help")) {
+            
+            return false;
+        }
+        
+        // Get chat logger.
+        ChatLogger chatLogger = ItemCaseCore.instance.getChatLogger();
+        
+        // Get translator.
+        LanguageTranslator translator = ItemCaseCore.instance.getTranslator();
+        
+        // Set placeholder.
+        translator.setPlaceholder("%COMMAND%", "/" + label + " create");
+        
+        // Show command help.
+        chatLogger.message(player, "command.itemcase-help");
+        
+        // Show specific help.
+        chatLogger.message(player, "command.create.help");
+        
+        return true;
     }
 }
