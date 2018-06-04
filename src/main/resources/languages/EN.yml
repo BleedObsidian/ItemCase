@@ -110,6 +110,21 @@ command:
         # Shown to the player when trying to access the storage of an infinite
         # itemcase shop.
         infinite: "This ItemCase has infinite items to buy/sell, therefore has no storage."
+        
+    # Messages shown when using the 'order' command.
+    order:
+        
+        # Shown to the player when asking for help.
+        # %LABEL% = The label used.
+        help-amount: "/%LABEL% order amount [amount]: Change amount."
+        
+        # Shown to the player when asking for help.
+        # %LABEL% = The label used.
+        help-buy: "/%LABEL% order buy: Buy the current order."
+        
+        # Shown to the player when asking for help.
+        # %LABEL% = The label used.
+        help-sell: "/%LABEL% order sell: Sell the current order."
        
 # Messages shown when ordering.
 order:

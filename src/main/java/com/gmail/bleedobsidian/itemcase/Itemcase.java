@@ -29,10 +29,13 @@ import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -145,12 +148,6 @@ public final class Itemcase {
         this.itemStack = itemStack.clone();
         this.itemStack.setAmount(1);
         
-        // Set display name to random UUID to prevent graphical item stacking.
-        ItemMeta metadata = this.itemStack.getItemMeta();
-        metadata.setDisplayName("com.gmail.bleedobsidian.itemcase:" +
-                UUID.randomUUID().toString());
-        this.itemStack.setItemMeta(metadata);
-        
         // Set location.
         this.location = location;
         
@@ -201,9 +198,18 @@ public final class Itemcase {
         // Get the location to spawn the display item at.
         Location displayItemSpawnLocation = this.getDisplayItemSpawnLocation();
         
+        // Get itemstack.
+        ItemStack itemStack = this.itemStack.clone();
+        
+        // Set display name to random UUID to prevent graphical item stacking.
+        ItemMeta metadata = itemStack.getItemMeta();
+        metadata.setDisplayName("com.gmail.bleedobsidian.itemcase:" +
+                UUID.randomUUID().toString());
+        itemStack.setItemMeta(metadata);
+        
         // Spawn the item.
         this.displayItem = this.location.getWorld().dropItem(
-                displayItemSpawnLocation, this.itemStack);
+                displayItemSpawnLocation, itemStack);
         
         // Add custom metadata so we know that this item is a display item and
         // shouldn't be picked up by players and which itemcase it belongs to.
@@ -461,6 +467,54 @@ public final class Itemcase {
                     event.setCancelled(true);
                 }
             }
+        }
+        
+        @EventHandler(priority = EventPriority.NORMAL)
+        public void onPlayerInteractEvent(PlayerInteractEvent event) {
+            
+            // Check if block was involved.
+            if(!event.hasBlock()) {
+                
+                // Exit.
+                return;
+            }
+            
+            // Check if action was correct.
+            if(event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+                
+                // Exit.
+                return;
+            }
+            
+            // If off-hand, skip.
+            if(event.getHand() == EquipmentSlot.OFF_HAND) {
+                
+                // Exit.
+                return;
+            }
+            
+            // If block is not an ItemCase.
+            if(!ItemCaseCore.instance.getItemcaseManager().isItemcase(
+                    event.getClickedBlock().getLocation())) {
+                
+               // Exit.
+               return;
+            }
+            
+            // Get itemcase.
+            Itemcase itemcase = ItemCaseCore.instance.getItemcaseManager()
+                    .getItemcase(event.getClickedBlock().getLocation());
+            
+            // If itemcase is not a shop.
+            if(itemcase.getType() == Type.SHOWCASE) {
+                
+                // Exit.
+                return;
+            }
+            
+            // Create new order.
+            ItemCaseCore.instance.getOrderManager().createOrder(itemcase, 
+                    event.getPlayer());
         }
     }
     

@@ -17,6 +17,7 @@ package com.gmail.bleedobsidian.itemcase;
 import com.gmail.bleedobsidian.itemcase.commands.CreateCommand;
 import com.gmail.bleedobsidian.itemcase.commands.ModifyCommand;
 import com.gmail.bleedobsidian.itemcase.commands.DestroyCommand;
+import com.gmail.bleedobsidian.itemcase.commands.OrderCommand;
 import com.gmail.bleedobsidian.itemcase.commands.StorageCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -50,6 +51,9 @@ public final class CommandHandler implements CommandExecutor {
             case "create":
                 new CreateCommand().execute(sender, label, args);
                 break;
+            case "order":
+                new OrderCommand().execute(sender, label, args);
+                break;
             case "destroy":
                 new DestroyCommand().execute(sender, label, args);
                 break;
@@ -78,9 +82,14 @@ public final class CommandHandler implements CommandExecutor {
         // Get translator.
         LanguageTranslator translator = ItemCaseCore.instance.getTranslator();
         
+        // Set placeholder to blank.
+        translator.setPlaceholder("%COMMAND%", "");
+        
+        // Set label placeholder.
+        translator.setPlaceholder("%LABEL%", label);
+        
         // Set placeholder.
-        translator.setPlaceholder("%COMMAND%", 
-                "/" + label + " [create/destroy/modify/storage]");
+        String command = "/" + label + " [create/order/destroy/modify/storage]";
         
         // Check if sender is a player or console.
         if(sender instanceof Player) {
@@ -94,6 +103,12 @@ public final class CommandHandler implements CommandExecutor {
             // Send message to player.
             logger.message(player, "command.itemcase-help");
             
+            // Send message to player.
+            logger.message(player, command);
+            
+            // Send message to player.
+            logger.message(player, "command.command-help");
+            
         } else {
             
             // Get console logger.
@@ -101,6 +116,12 @@ public final class CommandHandler implements CommandExecutor {
             
             // Send console message.
             logger.message(sender, "command.itemcase-help");
+            
+            // Send console message.
+            logger.message(sender, command);
+            
+            // Send console message.
+            logger.message(sender, "command.command-help");
         }
     }
 }

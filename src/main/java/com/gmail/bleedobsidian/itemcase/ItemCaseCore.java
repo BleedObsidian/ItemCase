@@ -18,6 +18,7 @@ package com.gmail.bleedobsidian.itemcase;
 import com.gmail.bleedobsidian.itemcase.Itemcase.ItemcaseListener;
 import com.gmail.bleedobsidian.itemcase.configurations.ConfigFile;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
+import com.gmail.bleedobsidian.itemcase.managers.OrderManager;
 import java.io.IOException;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -64,6 +65,11 @@ public final class ItemCaseCore extends JavaPlugin {
      * ItemcaseManager.
      */
     private final ItemcaseManager itemcaseManager =  new ItemcaseManager();
+    
+    /**
+     * OrderManager.
+     */
+    private final OrderManager orderManager = new OrderManager();
 
     @Override
     public void onEnable() {
@@ -177,5 +183,12 @@ public final class ItemCaseCore extends JavaPlugin {
      */
     public ItemcaseManager getItemcaseManager() {
         return this.itemcaseManager;
+    }
+    
+    /**
+     * @return OrderManager.
+     */
+    public OrderManager getOrderManager() {
+        return this.orderManager;
     }
 }
