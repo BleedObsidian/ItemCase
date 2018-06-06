@@ -26,5 +26,6 @@ Order:
 # https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 Materials:
     - 'STEP'                # Slabs.
+    - 'STONE_SLAB2'         # Red Sandstone Slabs.
     - 'WOOD_STEP'           # Wooden Slabs.
     - 'PURPUR_SLAB'         # Purpur Slabs.

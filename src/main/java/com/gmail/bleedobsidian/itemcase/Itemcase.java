@@ -483,6 +483,7 @@ public final class Itemcase {
         
         // If block is a slab.
         if(type == Material.STEP ||
+                type != Material.STONE_SLAB2 ||
                 type == Material.WOOD_STEP ||
                 type == Material.PURPUR_SLAB) {
             
@@ -576,6 +577,7 @@ public final class Itemcase {
                 // If not a slab.
                 if(type != Material.STEP &&
                     type != Material.WOOD_STEP &&
+                    type != Material.STONE_SLAB2 &&
                     type != Material.PURPUR_SLAB) {
                     
                     // Check if the block placed was 1 above an itemcase.
