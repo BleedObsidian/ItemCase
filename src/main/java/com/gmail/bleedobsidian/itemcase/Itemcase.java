@@ -51,8 +51,6 @@ import org.bukkit.util.Vector;
  */
 public final class Itemcase {
     
-    //TODO: Despawn items that were left from a config delete.
-    
     /**
      * The name of the inventory for Itemcase storage.
      */
@@ -579,6 +577,13 @@ public final class Itemcase {
                 return;
             }
             
+            // If player is sneaking.
+            if(event.getPlayer().isSneaking()) {
+                
+                // Exit.
+                return;
+            }
+            
             // If block is not an ItemCase.
             if(!ItemCaseCore.instance.getItemcaseManager().isItemcase(
                     event.getClickedBlock().getLocation())) {
@@ -601,6 +606,9 @@ public final class Itemcase {
             // Create new order.
             ItemCaseCore.instance.getOrderManager().createOrder(itemcase, 
                     event.getPlayer());
+            
+            // Cancel event.
+            event.setCancelled(true);
         }
     }
     
