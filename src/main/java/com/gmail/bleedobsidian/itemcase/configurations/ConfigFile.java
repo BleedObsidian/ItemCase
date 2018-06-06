@@ -51,27 +51,6 @@ public class ConfigFile extends ConfigurationFile {
     }
     
     /**
-     * @return If players can create Itemcases by sneaking and right-clicking.
-     */
-    public boolean canSneakCreate() {
-        return !this.file.getBoolean("Options.Disable-Sneak-Create");
-    }
-    
-    /**
-     * @return If orders can timeout.
-     */
-    public boolean canTimeout() {
-        return !this.file.getBoolean("Order.Disable-Timeout");
-    }
-    
-    /**
-     * @return The number of seconds required to pass for an order to timeout.
-     */
-    public int getTimeout() {
-        return this.file.getInt("Order.Timeout");
-    }
-    
-    /**
      * @return An array list of materials that can be used as Itemcases.
      */
     public ArrayList<Material> getMaterials() {

@@ -6,21 +6,6 @@
 # Locale: 
 #     - EN
 Locale: EN
-
-# General Options
-Options:
-    
-    # Disable ItemCase creation via sneaking and right clicking.
-    Disable-Sneak-Create: false
-    
-# Order options
-Order:
-    
-    # Disable automatic order timeout for itemcase shops.
-    Disable-Timeout: false
-    
-    # The time in seconds before an order automatically times out.
-    Timeout: 15
    
 # Materials that can be used for ItemCases.
 # https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
