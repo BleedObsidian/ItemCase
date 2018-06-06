@@ -144,9 +144,6 @@ public final class ItemCaseCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(
                 new ItemcaseListener(), this);
         
-        // Log.
-        this.consoleLogger.info("console.info.listener-registered");
-        
         // Load itemcases for already loaded worlds.
         this.itemcaseManager.initialize();
         
@@ -204,6 +201,9 @@ public final class ItemCaseCore extends JavaPlugin {
             return;
         }
         
+        // Log.
+        this.consoleLogger.info("console.info.vault-hooked");
+        
         // Set economy provider.
         this.economyProvider = rsp.getProvider();
         
@@ -211,6 +211,9 @@ public final class ItemCaseCore extends JavaPlugin {
         this.hasVault = true;
     }
     
+    /**
+     * Attempt to load WorldGuard.
+     */
     private void loadWorldGuard() {
         
         // Get plugin.
@@ -225,6 +228,9 @@ public final class ItemCaseCore extends JavaPlugin {
             // Exit.
             return;
         }
+        
+        // Log.
+        this.consoleLogger.info("console.info.worldguard-hooked");
         
         // Set true.
         this.hasWorldGuard = true;

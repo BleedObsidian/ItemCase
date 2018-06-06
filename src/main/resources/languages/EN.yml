@@ -15,10 +15,11 @@ console:
         # %WORLD_NAME% = The name of the world.
         locale: "Using locale: %LANGUAGE%"
         config-loaded: "Successfully loaded main configuration file."
-        listener-registered: "Main event listener registered."
         enabled: "ItemCase v%VERSION% enabled."
         unloaded: "Itemcases unloaded successfully."
         loaded: "Loaded itemcases for world: %WORLD_NAME%"
+        vault-hooked: "Vault successfully hooked."
+        worldguard-hooked: "WorldGuard successfully hooked."
 
 # Messages shown when using commands.
 command:
