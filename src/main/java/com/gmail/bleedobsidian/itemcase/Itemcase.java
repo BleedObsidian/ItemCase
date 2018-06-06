@@ -19,6 +19,7 @@ import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -261,6 +262,82 @@ public final class Itemcase {
     }
     
     /**
+     * Take stock from storage.
+     * 
+     * @param amount Amount to take.
+     */
+    public void takeStock(int amount) {
+        
+        // If storage is infinite.
+        if(this.storageType == StorageType.INFINITE) {
+            
+            // Exit.
+            return;
+        }
+        
+        // Get items.
+        ItemStack items = this.itemStack.clone();
+        items.setAmount(amount);
+        
+        // Remove from storage.
+        this.storage.removeItem(items);
+        
+        // Save.
+        ItemCaseCore.instance.getItemcaseManager().saveItemcases(this);
+    }
+    
+     /**
+     * Add stock to storage.
+     * 
+     * @param amount Amount to add.
+     */
+    public void addStock(int amount) {
+        
+        // If storage is infinite.
+        if(this.storageType == StorageType.INFINITE) {
+            
+            // Exit.
+            return;
+        }
+        
+        // Get items.
+        ItemStack items = this.itemStack.clone();
+        items.setAmount(amount);
+        
+        // Add to storage.
+        this.storage.addItem(items);
+        
+        // Save.
+        ItemCaseCore.instance.getItemcaseManager().saveItemcases(this);
+    }
+    
+    /**
+     * @param amount The amount of items needed.
+     * @return If the itemcase has enough in stock.
+     */
+    public boolean hasEnough(int amount) {
+        
+        // If storage is infinite.
+        if(this.storageType == StorageType.INFINITE) {
+            
+            // Return true.
+            return true;
+        }
+        
+        // Return if storage contains enough.
+        return this.storage.containsAtLeast(this.itemStack, amount);
+    }
+    
+    /**
+     * @return The amount of stock this itemcase has.
+     */
+    public int getStockLevel() {
+        
+        // Return count.
+        return InventoryUtils.count(this.storage, this.itemStack);
+    }
+    
+    /**
      * @return The ItemStack that this itemcase is showing.
      */
     public ItemStack getItemStack() {
@@ -318,6 +395,15 @@ public final class Itemcase {
      * @param storageType StorageType.
      */
     public void setStorageType(StorageType storageType) {
+        
+        // If toggling from finite to infinite.
+        if(this.storageType == StorageType.FINITE &&
+                storageType == StorageType.INFINITE) {
+            
+            // Set storage.
+            this.storage = 
+                    Bukkit.createInventory(null, 54, Itemcase.INVENTORY_NAME);
+        }
         
         // Set storage type.
         this.storageType= storageType;

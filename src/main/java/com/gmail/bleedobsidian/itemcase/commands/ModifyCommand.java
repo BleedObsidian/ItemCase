@@ -58,6 +58,16 @@ public final class ModifyCommand implements Command {
             return;
         }
         
+        // If incorrect number of args.
+        if(args.length != 3) {
+            
+            // Show help.
+            this.showHelp(player, label);
+            
+            // Exit.
+            return;
+        }
+        
         // Get chat logger.
         ChatLogger chatLogger = ItemCaseCore.instance.getChatLogger();
         

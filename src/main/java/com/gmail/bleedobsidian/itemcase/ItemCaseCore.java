@@ -20,6 +20,8 @@ import com.gmail.bleedobsidian.itemcase.configurations.ConfigFile;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import com.gmail.bleedobsidian.itemcase.managers.OrderManager;
 import java.io.IOException;
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -70,6 +72,16 @@ public final class ItemCaseCore extends JavaPlugin {
      * OrderManager.
      */
     private final OrderManager orderManager = new OrderManager();
+    
+    /**
+     * If the server has Vault.
+     */
+    private boolean hasVault;
+    
+    /**
+     * The economy provider if there is one.
+     */
+    private Economy economyProvider;
 
     @Override
     public void onEnable() {
@@ -126,6 +138,9 @@ public final class ItemCaseCore extends JavaPlugin {
         // Set command executor.
         this.getCommand("itemcase").setExecutor(new CommandHandler());
         
+        // Attempt to load Vault.
+        this.loadVault();
+        
         // Set version placeholder and log.
         this.translator.setPlaceholder("%VERSION%",
                 this.getDescription().getVersion());
@@ -140,6 +155,42 @@ public final class ItemCaseCore extends JavaPlugin {
         
         // Log.
         this.consoleLogger.info("console.info.unloaded");
+    }
+    
+    /**
+     * Attempt to load Vault.
+     */
+    private void loadVault() {
+        
+        // Check if this server has Vault installed.
+        if(getServer().getPluginManager().getPlugin("Vault") == null) {
+            
+            // Set false.
+            this.hasVault = false;
+            
+            // Exit.
+            return;
+        }
+        
+        // Get server provider of economy class.
+        RegisteredServiceProvider<Economy> rsp =
+                getServer().getServicesManager().getRegistration(Economy.class);
+        
+        // If could not find economy service provider.
+        if(rsp == null) {
+            
+            // Set false.
+            this.hasVault = false;
+            
+            // Exit.
+            return;
+        }
+        
+        // Set economy provider.
+        this.economyProvider = rsp.getProvider();
+        
+        // Set true.
+        this.hasVault = true;
     }
     
     /**
@@ -190,5 +241,19 @@ public final class ItemCaseCore extends JavaPlugin {
      */
     public OrderManager getOrderManager() {
         return this.orderManager;
+    }
+    
+    /**
+     * @return If vault is setup on this server.
+     */
+    public boolean hasVault() {
+        return this.hasVault;
+    }
+    
+    /**
+     * @return EconomyProvider.
+     */
+    public Economy getEconomyProvider() {
+        return this.economyProvider;
     }
 }

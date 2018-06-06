@@ -119,6 +119,17 @@ public class OrderManager {
     }
     
     /**
+     * Mark order as completed.
+     * 
+     * @param player Player.
+     */
+    public void completeOrder(Player player) {
+        
+        // Remove oder.
+        this.orders.remove(player);
+    }
+    
+    /**
      * @param player Player.
      * @return If order exists for given player.
      */
@@ -129,9 +140,19 @@ public class OrderManager {
     }
     
     /**
+     * @param player Player.
+     * @return The order linked with this player.
+     */
+    public ItemcaseOrder getOrder(Player player) {
+        
+        // Return order linked to player.
+        return this.orders.get(player);
+    }
+    
+    /**
      * An order for a specific itemcase of some amount.
      */
-    private final class ItemcaseOrder {
+    public final class ItemcaseOrder {
         
         /**
          * The itemcase this order is for.
@@ -141,7 +162,7 @@ public class OrderManager {
         /**
          * The amount.
          */
-        private final int amount;
+        private int amount;
         
         /**
          * Constructor.
@@ -172,6 +193,15 @@ public class OrderManager {
             
             // Amount.
             return amount;
+        }
+        
+        /**
+         * @param amount Amount.
+         */
+        public void setAmount(int amount) {
+            
+            // Set amount.
+            this.amount = amount;
         }
     }
 }

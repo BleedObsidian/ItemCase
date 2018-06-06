@@ -125,6 +125,63 @@ command:
         # Shown to the player when asking for help.
         # %LABEL% = The label used.
         help-sell: "/%LABEL% order sell: Sell the current order."
+        
+        # Shown when the player uses this command but don't have an active order.
+        no-order: "You do not have an active order."
+        
+        # Shown when a player uses an order command but no vault hook is present.
+        no-vault: "Sorry, this server does not have Vault or an economy plugin."
+        
+        # Shown when the player enters an invalid amount.
+        invalid-amount: "Invalid amount."
+        
+        # Shown when the player uses the amount command,
+        # %AMOUNT% = The amount the player entered.
+        amount-update: "Amount updated to %AMOUNT%."
+        
+        # Shown when the player does not have enough money for an order.
+        # %MONEY% = The formatted money and name.
+        not-enough-money: "You need atleast %MONEY% to complete this order."
+        
+        # Shown when the owner does not have enough money for an order.
+        owner-not-enough-money: "Sorry, the owner of this ItemCase does not have the funds to buy these items from you."
+        
+        # Shown when the player sets an amount higher than the amount an itemcase has.
+        # %AMOUNT% = The amount left.
+        not-enough-stock: "Sorry, this itemcase only has %AMOUNT% left."
+        
+        # Shown when a player tries to sell more than they have.
+        not-enough-items: "You do not have enough of the item to sell."
+        
+        # Shown when an itemcase has zero stock.
+        no-stock: "Sorry, this itemcase has no stock."
+        
+        # Shown when a transaction failes for some reason.
+        failed: "Transaction failed"
+        
+        # Shown when a player tries to buy items form an itemcase that only players can sell to.
+        no-buy: "You cannot buy items from this itemcase."
+        
+        # Shown when a player tries to sell items to an itemcase that only players can buy from.
+        no-sell: "You cannot sell items to this itemcase."
+        
+        # Shown to an owner if they are online when a player buys from one of their itemcases.
+        bought-from: "%PLAYER% bought %AMOUNT% x %ITEM_NAME% from you for %MONEY%."
+        
+        # Shown to an owner if they are online when a player sells to one of their itemcases.
+        # %AMOUNT% = The amount left.
+        # %MONEY% = The formatted money and name.
+        # %ITEM_NAME% = The item being sold.
+        # %PLAYER% = The player's name.
+        sold-to: "%PLAYER% sold %AMOUNT% x %ITEM_NAME% to you for %MONEY%."
+        
+        # Shown when the player buys from a shop.
+        # %MONEY% = The formatted money and name.
+        withdrew: "Withdrew %MONEY% from your account."
+        
+        # Shown when the player sell to a shop.
+        # %MONEY% = The formatted money and name.
+        deposit: "Deposited %MONEY% to your account."
        
 # Messages shown when ordering.
 order:
