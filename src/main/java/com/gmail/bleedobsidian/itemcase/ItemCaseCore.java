@@ -22,8 +22,10 @@ import com.gmail.bleedobsidian.itemcase.Itemcase.ItemcaseListener;
 import com.gmail.bleedobsidian.itemcase.configurations.ConfigFile;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import com.gmail.bleedobsidian.itemcase.managers.OrderManager;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import java.io.IOException;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -82,9 +84,19 @@ public final class ItemCaseCore extends JavaPlugin {
     private boolean hasVault;
     
     /**
+     * If the server has WorldGuard.
+     */
+    private boolean hasWorldGuard;
+    
+    /**
      * The economy provider if there is one.
      */
     private Economy economyProvider;
+    
+    /**
+     * WorldGuard.
+     */
+    private WorldGuardPlugin worldGuard;
 
     @Override
     public void onEnable() {
@@ -144,6 +156,9 @@ public final class ItemCaseCore extends JavaPlugin {
         // Attempt to load Vault.
         this.loadVault();
         
+        // Attempt to load WorldGuard.
+        this.loadWorldGuard();
+        
         // Set version placeholder and log.
         this.translator.setPlaceholder("%VERSION%",
                 this.getDescription().getVersion());
@@ -194,6 +209,28 @@ public final class ItemCaseCore extends JavaPlugin {
         
         // Set true.
         this.hasVault = true;
+    }
+    
+    private void loadWorldGuard() {
+        
+        // Get plugin.
+        Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
+        
+        // Check if the server has WorldGuard installed.
+        if(plugin == null) {
+            
+            // Set false.
+            this.hasWorldGuard = false;
+            
+            // Exit.
+            return;
+        }
+        
+        // Set true.
+        this.hasWorldGuard = true;
+        
+        // Set worldguard.
+        this.worldGuard = (WorldGuardPlugin) plugin;
     }
     
     /**
@@ -254,9 +291,23 @@ public final class ItemCaseCore extends JavaPlugin {
     }
     
     /**
+     * @return If WorldGuard is setup on this server.
+     */
+    public boolean hasWorldGuard() {
+        return this.hasWorldGuard;
+    }
+    
+    /**
      * @return EconomyProvider.
      */
     public Economy getEconomyProvider() {
         return this.economyProvider;
+    }
+    
+    /**
+     * @return WorldGuard.
+     */
+    public WorldGuardPlugin getWorldGuard() {
+        return this.worldGuard;
     }
 }

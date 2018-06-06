@@ -19,6 +19,7 @@ import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -139,6 +140,12 @@ public final class Itemcase {
      */
     public Itemcase(Type type, ItemStack itemStack, Location location,
             OfflinePlayer owner) {
+        
+        // Check params are not null.
+        Validate.notNull(type, "Itemcase type can not be null.");
+        Validate.notNull(itemStack, "Itemstack can not be null.");
+        Validate.notNull(location, "Location can not be null.");
+        Validate.notNull(owner, "Owner can not be null.");
         
         // Set type.
         this.type = type;
@@ -349,7 +356,7 @@ public final class Itemcase {
         // Location of this itemcase.
         return this.location;
     }
-    
+
     /**
      * @return The owner of this itemcase.
      */
@@ -653,7 +660,7 @@ public final class Itemcase {
      * is particularly useful when servers use anti-lag plugins that forcibly
      * kill entities or a player has somehow caused an item to move.
      */
-    private final class ItemcaseTask extends BukkitRunnable {
+    public final class ItemcaseTask extends BukkitRunnable {
         
         /**
          * The itemcase that this task is for.

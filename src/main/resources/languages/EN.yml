@@ -69,6 +69,9 @@ command:
         # holding any item in their main hand.
         main-hand: "You must be holding something in your main hand."
         
+        # Shown when a player tries to make an itemcase in a WorldGuard restricted location.
+        no-build: "You do not have building permission here."
+        
         # Shown to the player upon successful creation.
         success: "ItemCase created."
     

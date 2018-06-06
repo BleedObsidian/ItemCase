@@ -18,6 +18,7 @@ import com.gmail.bleedobsidian.itemcase.Command;
 import com.gmail.bleedobsidian.itemcase.loggers.ChatLogger;
 import com.gmail.bleedobsidian.itemcase.ItemCaseCore;
 import com.gmail.bleedobsidian.itemcase.LanguageTranslator;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import java.util.ArrayList;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -101,6 +102,23 @@ public final class CreateCommand implements Command {
 
             // Exit.
             return;
+        }
+        
+        // If this server has WorldGuard.
+        if(ItemCaseCore.instance.hasWorldGuard()) {
+            
+            // Get world guard.
+            WorldGuardPlugin worldGuard = ItemCaseCore.instance.getWorldGuard();
+            
+            // If player cannot build here.
+            if(!worldGuard.canBuild(player, target)) {
+                
+                // Show message.
+                chatLogger.message(player, "command.create.no-build");
+                
+                // Exit.
+                return;
+            }
         }
 
         // Get item in players main hand to use as the Itemcase item.
