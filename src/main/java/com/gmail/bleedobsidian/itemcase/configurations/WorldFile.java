@@ -41,7 +41,7 @@ import org.bukkit.inventory.ItemStack;
  * 
  * @author Jesse Prescott (BleedObsidian)
  */
-public class WorldFile extends ConfigurationFile {
+public final class WorldFile extends ConfigurationFile {
     
     /**
      * The world this configuration file is for.

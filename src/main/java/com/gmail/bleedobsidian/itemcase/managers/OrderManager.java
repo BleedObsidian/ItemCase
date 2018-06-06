@@ -28,7 +28,7 @@ import org.bukkit.entity.Player;
  * 
  * @author Jesse Prescott (BleedObsidian)
  */
-public class OrderManager {
+public final class OrderManager {
     
     /**
      * HashMap of players and their active orders.

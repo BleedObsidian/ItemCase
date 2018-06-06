@@ -24,7 +24,7 @@ import org.bukkit.Material;
  * 
  * @author Jesse Prescott (BleedObsidian)
  */
-public class ConfigFile extends ConfigurationFile {
+public final class ConfigFile extends ConfigurationFile {
     
     /**
      * Constructor.

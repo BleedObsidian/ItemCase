@@ -22,7 +22,7 @@ import com.gmail.bleedobsidian.itemcase.LanguageTranslator.Language;
  * 
  * @author Jesse Prescott (BleedObsidian)
  */
-public class LanguageFile extends ConfigurationFile {
+public final class LanguageFile extends ConfigurationFile {
     
     /**
      * Constructor.
