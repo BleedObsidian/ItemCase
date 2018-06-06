@@ -475,12 +475,31 @@ public final class Itemcase {
      */
     public Location getDisplayItemSpawnLocation() {
         
+        // Get block type of this itemcase.
+        Material type = this.location.getBlock().getType();
+        
+        // The relative Y coordinate.
+        double relY = 0;
+        
+        // If block is a slab.
+        if(type == Material.STEP ||
+                type == Material.WOOD_STEP ||
+                type == Material.PURPUR_SLAB) {
+            
+            // Set relY.
+            relY = 0.6;
+        } else {
+            
+            // Set relY.
+            relY = 1.6;
+        }
+        
         // Create a location that is in the centre of the block and slightly 
         // above.
         Location displayItemLocation = new Location(
                 this.location.getWorld(),
                 this.location.getBlockX() + 0.5,
-                this.location.getBlockY() + 1.5,
+                this.location.getBlockY() + relY,
                 this.location.getBlockZ() + 0.5);
         
         // Return the default location to spawn the display item.
@@ -544,11 +563,28 @@ public final class Itemcase {
             // For every Itemcase.
             for(Itemcase itemcase : itemcaseManager.getItemcases()) {
                 
+                // Get block type.
+                Material type = itemcase.getLocation().getBlock().getType();
+                
                 // Check if the block placed was on an itemcase.
                 if(itemcase.location.equals(event.getBlock().getLocation())) {
                     
                     // Cancel the event.
                     event.setCancelled(true);
+                }
+                
+                // If not a slab.
+                if(type != Material.STEP &&
+                    type != Material.WOOD_STEP &&
+                    type != Material.PURPUR_SLAB) {
+                    
+                    // Check if the block placed was 1 above an itemcase.
+                    if(itemcase.location.clone().add(0, 1, 0)
+                            .equals(event.getBlock().getLocation())) {
+
+                        // Cancel the event.
+                        event.setCancelled(true);
+                    }
                 }
             }
         }
@@ -741,7 +777,7 @@ public final class Itemcase {
 
             // Check if the display item has for some reason moved.
             if(x != displayItemSpawnLocation.getX() ||
-                    y != displayItemSpawnLocation.getBlockY() - 1 ||
+                    y != displayItemSpawnLocation.getBlockY() ||
                     z != displayItemSpawnLocation.getZ()) {
 
                 // Move the display item back to where it should be.
