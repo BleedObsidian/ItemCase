@@ -12,8 +12,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
-package com.gmail.bleedobsidian.itemcase;
+package com.gmail.bleedobsidian.itemcase.loggers;
 
+import com.gmail.bleedobsidian.itemcase.LanguageTranslator;
 import org.bukkit.command.CommandSender;
 
 /**

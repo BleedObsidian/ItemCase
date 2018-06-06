@@ -15,6 +15,9 @@
 
 package com.gmail.bleedobsidian.itemcase;
 
+import com.gmail.bleedobsidian.itemcase.loggers.ConsoleLogger;
+import com.gmail.bleedobsidian.itemcase.loggers.GenericLogger;
+import com.gmail.bleedobsidian.itemcase.loggers.ChatLogger;
 import com.gmail.bleedobsidian.itemcase.Itemcase.ItemcaseListener;
 import com.gmail.bleedobsidian.itemcase.configurations.ConfigFile;
 import com.gmail.bleedobsidian.itemcase.managers.ItemcaseManager;

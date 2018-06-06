@@ -14,7 +14,8 @@
  */
 package com.gmail.bleedobsidian.itemcase.commands;
 
-import com.gmail.bleedobsidian.itemcase.ChatLogger;
+import com.gmail.bleedobsidian.itemcase.Command;
+import com.gmail.bleedobsidian.itemcase.loggers.ChatLogger;
 import com.gmail.bleedobsidian.itemcase.ItemCaseCore;
 import com.gmail.bleedobsidian.itemcase.LanguageTranslator;
 import java.util.ArrayList;

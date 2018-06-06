@@ -14,6 +14,8 @@
  */
 package com.gmail.bleedobsidian.itemcase;
 
+import com.gmail.bleedobsidian.itemcase.loggers.GenericLogger;
+import com.gmail.bleedobsidian.itemcase.loggers.ChatLogger;
 import com.gmail.bleedobsidian.itemcase.commands.CreateCommand;
 import com.gmail.bleedobsidian.itemcase.commands.ModifyCommand;
 import com.gmail.bleedobsidian.itemcase.commands.DestroyCommand;

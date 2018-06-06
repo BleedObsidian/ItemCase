@@ -13,8 +13,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/gpl.html>.
  */
 
-package com.gmail.bleedobsidian.itemcase;
+package com.gmail.bleedobsidian.itemcase.loggers;
 
+import com.gmail.bleedobsidian.itemcase.LanguageTranslator;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
