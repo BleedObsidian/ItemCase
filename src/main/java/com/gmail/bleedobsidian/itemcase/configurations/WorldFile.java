@@ -208,6 +208,9 @@ public final class WorldFile extends ConfigurationFile {
             // Create itemcase object.
             Itemcase itemcase = new Itemcase(type, itemstack, location, owner);
             
+            // Spawn item.
+            itemcase.spawnItem();
+            
             // If itemcase is a shop.
             if(type != Type.SHOWCASE) {
                 

@@ -158,9 +158,6 @@ public final class Itemcase {
         
         // Set owner.
         this.owner = owner;
-        
-        // Spawn display item for the first time.
-        this.spawnItem();
     }
     
     /**
@@ -483,7 +480,7 @@ public final class Itemcase {
         
         // If block is a slab.
         if(type == Material.STEP ||
-                type != Material.STONE_SLAB2 ||
+                type == Material.STONE_SLAB2 ||
                 type == Material.WOOD_STEP ||
                 type == Material.PURPUR_SLAB) {
             

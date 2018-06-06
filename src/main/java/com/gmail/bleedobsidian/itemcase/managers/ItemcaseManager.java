@@ -144,6 +144,9 @@ public final class ItemcaseManager {
         Itemcase itemcase = new Itemcase(Itemcase.Type.SHOWCASE, itemStack,
                 location, owner);
         
+        // Spawn item.
+        itemcase.spawnItem();
+        
         // Add itemcase to the list.
         this.itemcases.add(itemcase);
         
