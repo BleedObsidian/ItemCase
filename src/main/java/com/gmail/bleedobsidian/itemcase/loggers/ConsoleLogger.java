@@ -20,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.fusesource.jansi.Ansi;
 
 /**
  * A custom logger used to add color to the console when using warnings and
@@ -29,24 +28,6 @@ import org.fusesource.jansi.Ansi;
  * @author Jesse Prescott (BleedObsidian)
  */
 public final class ConsoleLogger extends Logger {
-    
-     /**
-     * White color string for console.
-     */
-    private static final String WHITE_COLOR = 
-            Ansi.ansi().fg(Ansi.Color.WHITE).boldOff().toString();
-    
-    /**
-     * Yellow color string for console.
-     */
-    private static final String YELLOW_COLOR = 
-            Ansi.ansi().fg(Ansi.Color.YELLOW).bold().toString();
-    
-    /**
-     * Red color string for console.
-     */
-    private static final String RED_COLOR =
-            Ansi.ansi().fg(Ansi.Color.RED).bold().toString();
     
     /**
      * The plugin prefix.
@@ -103,36 +84,12 @@ public final class ConsoleLogger extends Logger {
     @Override
     public void warning(String message) {
         
-        // If message is a message key.
-        if(translator.isKey(message)) {
-            
-            // Translate.
-            message = translator.getTranslation(message);
-            
-        }
-        
-        // Add color to message.
-        message = ConsoleLogger.YELLOW_COLOR + message +
-                ConsoleLogger.WHITE_COLOR;
-        
         // Log message.
         this.log(Level.WARNING, message);
     }
     
     @Override
     public void severe(String message) {
-        
-        // If message is a message key.
-        if(translator.isKey(message)) {
-            
-            // Translate.
-            message = translator.getTranslation(message);
-            
-        }
-        
-        // Add color to message.
-        message = ConsoleLogger.RED_COLOR + message +
-                ConsoleLogger.WHITE_COLOR;
         
         // Log message.
         this.log(Level.SEVERE, message);
@@ -145,18 +102,6 @@ public final class ConsoleLogger extends Logger {
      * @param throwable The exception to display.
      */
     public void severe(String message, Throwable throwable) {
-        
-        // If message is a message key.
-        if(translator.isKey(message)) {
-            
-            // Translate.
-            message = translator.getTranslation(message);
-            
-        }
-        
-        // Add color to message.
-        message = ConsoleLogger.RED_COLOR + message +
-                ConsoleLogger.WHITE_COLOR;
         
         // Log message.
         this.log(Level.SEVERE, message, throwable);

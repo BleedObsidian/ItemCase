@@ -1,5 +1,5 @@
 name: ItemCase
-version: 2.0.0
+version: 2.0.1
 description: ItemCase is a Bukkit plugin allowing you to showcase items on slabs, that can also be used as shops.
 load: POSTWORLD
 softdepend: [WorldGuard, Vault]
@@ -19,9 +19,9 @@ permissions:
     itemcase.create:
         description: Create and destroy showcase itemcases.
     itemcase.create.shop.buy:
-        description: Create itemcases that can buy things from players.
-    itemcase.create.shop.sell:
         description: Create itemcases that can sell things to players.
+    itemcase.create.shop.sell:
+        description: Create itemcases that can buy things from players.
     itemcase.create.shop.infinite:
         description: Create an itemcase shop that has infinite items to buy/sell.
     itemcase.modify.other:
